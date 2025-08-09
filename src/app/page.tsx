@@ -26,7 +26,7 @@ export default function Home() {
           </p>
 
           <p className="text-[#ffffff]">
-            I'm an aspiring robotics researcher exploring intelligent systems, computer vision, and AI for embodied agents.
+            I&apos;m an aspiring robotics researcher exploring intelligent systems, computer vision, and AI for embodied agents.
             Passionate about autonomy, perception, and robotic learning.
           </p>
 
