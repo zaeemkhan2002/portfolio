@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@keyframes move-robot {
+  0%   { transform: translateX(0) scaleX(1); }
+  49.999% { transform: translateX(90vw) scaleX(1); }  /* Right edge */
+  50%  { transform: translateX(90vw) scaleX(-1); }    /* Flip direction */
+  100% { transform: translateX(0) scaleX(-1); }       /* Return left flipped */
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.robot-move {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 164px;
+  height: 164px;
+  z-index: 0;
+  animation: move-robot 36s linear infinite;
+}
+
+@keyframes drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+/* .bg-dotted-grid {
+  background-image: radial-gradient(#00ffbb 1px, transparent 0);
+  background-size: 30px 30px;
+  animation: drift 60s linear infinite;
+  z-index: -1;
+} */
+html, body {
+  scroll-behavior: smooth;
+}
+
+@supports (font-synthesis-weight: auto) {
+  body { font-synthesis-weight: auto; }
+}
+
+body {
+  background-color: #1c122a;
+  background-image: url('/circuit-board.svg');
+  background-repeat: repeat;
+  background-size: auto;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
