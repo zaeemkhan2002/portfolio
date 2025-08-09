@@ -1,14 +1,16 @@
 // src/app/projects/[slug]/page.tsx
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { projects } from "@/data/projects"; // adjust path if different
+import { projects } from "@/data/projects";
 
-export default function ProjectPage({
+export default async function ProjectPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const project = projects.find(p => p.slug === params.slug);
+  const { slug } = await params;
+
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return notFound();
 
   return (
@@ -16,7 +18,7 @@ export default function ProjectPage({
       <h1 className="text-3xl md:text-4xl font-bold mb-2">{project.title}</h1>
       <p className="text-sm text-gray-400 mb-6">{project.year}</p>
 
-      {project.cover && (
+      {!!project.cover && (
         <div className="relative w-full aspect-[16/9] mb-8 overflow-hidden rounded-xl border border-white/10">
           <Image src={project.cover} alt={project.title} fill className="object-cover" />
         </div>
@@ -26,8 +28,10 @@ export default function ProjectPage({
 
       {project.tags?.length ? (
         <ul className="flex flex-wrap gap-2 mb-8">
-          {project.tags.map(t => (
-            <li key={t} className="px-3 py-1 rounded-full bg-white/10 text-sm">{t}</li>
+          {project.tags.map((t) => (
+            <li key={t} className="px-3 py-1 rounded-full bg-white/10 text-sm">
+              {t}
+            </li>
           ))}
         </ul>
       ) : null}
@@ -39,13 +43,19 @@ export default function ProjectPage({
       {project.links && (
         <div className="mt-8 flex gap-4">
           {project.links.github && (
-            <a className="underline" href={project.links.github} target="_blank">GitHub</a>
+            <a className="underline" href={project.links.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
           )}
           {project.links.demo && (
-            <a className="underline" href={project.links.demo} target="_blank">Demo</a>
+            <a className="underline" href={project.links.demo} target="_blank" rel="noreferrer">
+              Demo
+            </a>
           )}
           {project.links.paper && (
-            <a className="underline" href={project.links.paper} target="_blank">Paper</a>
+            <a className="underline" href={project.links.paper} target="_blank" rel="noreferrer">
+              Paper
+            </a>
           )}
         </div>
       )}
@@ -53,7 +63,6 @@ export default function ProjectPage({
   );
 }
 
-// (optional) prebuild static pages if you know your slugs
 export async function generateStaticParams() {
-  return projects.map(p => ({ slug: p.slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
