@@ -6,12 +6,12 @@ import { projects } from "@/data/projects";
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params; // no await
 
   const project = projects.find((p) => p.slug === slug);
-  if (!project) return notFound();
+  if (!project) notFound();
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-12">
@@ -63,6 +63,6 @@ export default async function ProjectPage({
   );
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
