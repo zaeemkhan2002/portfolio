@@ -1,52 +1,59 @@
+// src/app/projects/[slug]/page.tsx
 import Image from "next/image";
-import Link from "next/link";
-import { projects } from "@/data/projects";
+import { notFound } from "next/navigation";
+import { projects } from "@/data/projects"; // adjust path if different
 
-export function generateStaticParams() {
-  return projects.map(p => ({ slug: p.slug }));
-}
-
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const p = projects.find(x => x.slug === params.slug);
-  return { title: p ? `${p.title} — Projects` : "Project" };
-}
-
-export default function ProjectDetail({ params }: { params: { slug: string } }) {
-  const p = projects.find(x => x.slug === params.slug);
-  if (!p) return <div className="p-8">Not found.</div>;
+export default function ProjectPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const project = projects.find(p => p.slug === params.slug);
+  if (!project) return notFound();
 
   return (
-    <main className="min-h-screen px-6 py-12">
-      <div className="max-w-3xl mx-auto space-y-6">
-        <Link href="/projects" className="text-cyan-300 hover:underline">← Back to projects</Link>
+    <main className="max-w-4xl mx-auto px-6 py-12">
+      <h1 className="text-3xl md:text-4xl font-bold mb-2">{project.title}</h1>
+      <p className="text-sm text-gray-400 mb-6">{project.year}</p>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-white">{p.title}</h1>
-        <div className="text-sm text-white/70">{p.year} • {p.tags.join(" • ")}</div>
-
-        <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-white/10">
-          <Image src={p.cover} alt={p.title} fill className="object-cover" />
+      {project.cover && (
+        <div className="relative w-full aspect-[16/9] mb-8 overflow-hidden rounded-xl border border-white/10">
+          <Image src={project.cover} alt={project.title} fill className="object-cover" />
         </div>
+      )}
 
-        <p className="text-white/80">{p.summary}</p>
-        {p.body && <p className="text-white/70 leading-7">{p.body}</p>}
+      <p className="text-lg leading-7 mb-6">{project.summary}</p>
 
-        {p.links && (
-          <div className="flex flex-wrap gap-3 pt-2">
-            {p.links.github && (
-              <a className="px-3 py-1.5 rounded border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/10"
-                 href={p.links.github} target="_blank" rel="noreferrer">GitHub</a>
-            )}
-            {p.links.demo && (
-              <a className="px-3 py-1.5 rounded border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/10"
-                 href={p.links.demo} target="_blank" rel="noreferrer">Demo</a>
-            )}
-            {p.links.paper && (
-              <a className="px-3 py-1.5 rounded border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/10"
-                 href={p.links.paper} target="_blank" rel="noreferrer">Paper</a>
-            )}
-          </div>
-        )}
-      </div>
+      {project.tags?.length ? (
+        <ul className="flex flex-wrap gap-2 mb-8">
+          {project.tags.map(t => (
+            <li key={t} className="px-3 py-1 rounded-full bg-white/10 text-sm">{t}</li>
+          ))}
+        </ul>
+      ) : null}
+
+      {project.body && (
+        <article className="prose prose-invert max-w-none">{project.body}</article>
+      )}
+
+      {project.links && (
+        <div className="mt-8 flex gap-4">
+          {project.links.github && (
+            <a className="underline" href={project.links.github} target="_blank">GitHub</a>
+          )}
+          {project.links.demo && (
+            <a className="underline" href={project.links.demo} target="_blank">Demo</a>
+          )}
+          {project.links.paper && (
+            <a className="underline" href={project.links.paper} target="_blank">Paper</a>
+          )}
+        </div>
+      )}
     </main>
   );
+}
+
+// (optional) prebuild static pages if you know your slugs
+export async function generateStaticParams() {
+  return projects.map(p => ({ slug: p.slug }));
 }
