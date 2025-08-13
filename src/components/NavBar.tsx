@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Home, FolderOpen, User, Mail } from "lucide-react"; // icons
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/projects", label: "Projects", icon: FolderOpen },
+  { href: "/about", label: "About", icon: User },
+  { href: "/contact", label: "Contact", icon: Mail },
 ];
 
 export default function Navbar() {
@@ -17,32 +18,47 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Sticky glass bar */}
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[min(1100px,94%)]">
-        <nav className="rounded-2xl border border-white/15 bg-white/70 dark:bg-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
-          <div className="px-4 py-3 flex items-center justify-between">
-            <Link href="/" className="font-semibold tracking-tight text-[#2c2438] dark:text-neutral-100">
-              Zaeem
-            </Link>
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-auto">
+        <nav
+          className={[
+            "relative overflow-hidden rounded-full border",
+            "bg-white/40 dark:bg-white/10",
+            "backdrop-blur-xl backdrop-saturate-150",
+            "border-white/50 dark:border-white/10",
+            "shadow-[0_4px_12px_rgba(0,0,0,0.08)] ring-1 ring-black/5",
+          ].join(" ")}
+        >
+          {/* glossy top highlight */}
+          <div className="pointer-events-none absolute inset-0 rounded-full">
+            <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/50 via-white/20 to-transparent opacity-70 rounded-t-full" />
+          </div>
 
-            {/* Desktop links */}
-            <ul className="hidden md:flex gap-2">
-              {links.map(({ href, label }) => {
+          {/* Desktop menu */}
+          <div className="px-3 py-1.5 flex items-center justify-center">
+            <ul className="hidden md:flex items-center justify-center gap-1">
+              {links.map(({ href, label, icon: Icon }) => {
                 const active = pathname === href;
                 return (
-                  <li key={href}>
+                  <li key={href} className="relative">
                     <Link
                       href={href}
                       className={[
-                        "px-3 py-2 rounded-xl text-sm font-medium transition-colors relative",
-                        "text-[#3b2f2f] hover:text-cyan-700 dark:text-neutral-200",
-                        active ? "text-cyan-700" : "",
+                        "group relative flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium transition-all",
+                        "text-[#2b2323]/90 dark:text-neutral-200",
+                        "hover:text-[#0a7783] dark:hover:text-cyan-300",
+                        "hover:bg-white/55 dark:hover:bg-white/10",
+                        active
+                          ? [
+                              "text-[#0a7783] dark:text-cyan-300",
+                              "bg-white/65 dark:bg-white/[0.08]",
+                              "border border-white/70 dark:border-white/10",
+                              "shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]",
+                            ].join(" ")
+                          : "border border-transparent",
                       ].join(" ")}
                     >
+                      <Icon size={14} strokeWidth={2} />
                       {label}
-                      {active && (
-                        <span className="absolute left-3 right-3 -bottom-[2px] h-[2px] bg-gradient-to-r from-cyan-500 to-teal-400 rounded-full" />
-                      )}
                     </Link>
                   </li>
                 );
@@ -51,18 +67,33 @@ export default function Navbar() {
 
             {/* Mobile toggle */}
             <button
-              className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-black/10 dark:border-white/15"
-              onClick={() => setOpen(v => !v)}
+              className={[
+                "md:hidden ml-2 inline-flex items-center justify-center w-8 h-8 rounded-full",
+                "bg-white/60 dark:bg-white/10 border border-white/60 dark:border-white/15",
+                "backdrop-blur-md hover:bg-white/70 dark:hover:bg-white/15 transition-colors",
+              ].join(" ")}
+              onClick={() => setOpen((v) => !v)}
               aria-label="Toggle navigation menu"
             >
-              <div className="i">≡</div>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                className="text-[#1e1b1b] dark:text-neutral-200"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           </div>
 
           {/* Mobile menu */}
           {open && (
-            <ul className="md:hidden px-2 pb-3 pt-1">
-              {links.map(({ href, label }) => {
+            <ul className="md:hidden px-2 pb-2 pt-1 text-center">
+              {links.map(({ href, label, icon: Icon }) => {
                 const active = pathname === href;
                 return (
                   <li key={href}>
@@ -70,11 +101,15 @@ export default function Navbar() {
                       href={href}
                       onClick={() => setOpen(false)}
                       className={[
-                        "block w-full px-3 py-2 rounded-xl text-sm font-medium",
-                        "text-[#3b2f2f] hover:bg-white/70 hover:text-cyan-700",
-                        active ? "bg-white/80 text-cyan-700" : "",
+                        "flex items-center justify-center gap-1 w-full px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                        "text-[#2b2323] dark:text-neutral-200",
+                        "hover:bg-white/60 dark:hover:bg-white/10 hover:text-[#0a7783] dark:hover:text-cyan-300",
+                        active
+                          ? "bg-white/70 dark:bg-white/[0.08] text-[#0a7783] dark:text-cyan-300 border border-white/70 dark:border-white/10"
+                          : "border border-transparent",
                       ].join(" ")}
                     >
+                      <Icon size={14} strokeWidth={2} />
                       {label}
                     </Link>
                   </li>
@@ -85,8 +120,7 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Spacer so content doesn't hide under the fixed bar */}
-      <div className="h-24 md:h-24" />
+      <div className="h-12 md:h-12" />
     </>
   );
 }

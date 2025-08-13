@@ -44,20 +44,36 @@ body {
 /* Walking animation (side to side with flip) */
 @keyframes move-robot {
   0%   { transform: translateX(0) scaleX(1); }
-  49.999% { transform: translateX(90vw) scaleX(1); }  /* Right edge */
-  50%  { transform: translateX(90vw) scaleX(-1); }    /* Flip direction */
-  100% { transform: translateX(0) scaleX(-1); }       /* Return left */
+  49.999% { transform: translateX(90vw) scaleX(1); }
+  50%  { transform: translateX(90vw) scaleX(-1); }
+  100% { transform: translateX(0) scaleX(-1); }
 }
 
-/* Robot styling */
-.robot-move {
+/* Robot styling — NO opacity here */
+.robot-walk {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 164px;
-  height: 164px;
-  z-index: 0;
+  bottom: 6px;
+  left: 6px;
+  width: 128px;
+  height: 128px;
+  z-index: 40;                 /* above content */
   animation: move-robot 36s linear infinite;
+  transform-origin: center bottom;
+  pointer-events: none;        /* no clicks */
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .robot-walk {
+    width: 48px;
+    height: 48px;
+    animation: move-robot 20s linear infinite;
+  }
+}
+
+/* Don’t nuke all animations site-wide */
+@media (prefers-reduced-motion: reduce) {
+  .robot-walk { animation: none !important; }
 }
 
 /* Mobile adjustments */
@@ -68,3 +84,13 @@ body {
     animation: move-robot 20s linear infinite; /* Faster on mobile */
   }
 }
+/* 
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+} */
+
