@@ -1,91 +1,136 @@
 // src/app/projects/[slug]/page.tsx
+"use client";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import { motion, type Variants } from "framer-motion";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 12, filter: "blur(2px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
+const stagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.05
+    }
+  }
+};
 
 export default async function ProjectPage({
-    params,
-  }: {
-    params: Promise<{ slug: string }>;
-  }) {
-    const { slug } = await params; // ✅ matches Next.js 15 PageProps
-  
-    const project = projects.find((p) => p.slug === slug);
-    if (!project) notFound();
-  
-    return (
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">{project.title}</h1>
-        <p className="text-sm text-gray-400 mb-6">{project.year}</p>
-  
-        {!!project.cover && (
-          <div className="relative w-full aspect-[16/9] mb-8 overflow-hidden rounded-xl border border-white/10">
-            <Image
-              src={project.cover}
-              alt={project.title}
-              fill
-              className="object-cover"
-            />
-          </div>
-        )}
-  
-        <p className="text-lg leading-7 mb-6">{project.summary}</p>
-  
-        {project.tags?.length ? (
-          <ul className="flex flex-wrap gap-2 mb-8">
-            {project.tags.map((t) => (
-              <li
-                key={t}
-                className="px-3 py-1 rounded-full bg-white/10 text-sm"
-              >
-                {t}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-  
-        {project.body && (
-          <article className="prose prose-invert max-w-none">
-            {project.body}
-          </article>
-        )}
-  
-        {project.links && (
-          <div className="mt-8 flex gap-4">
-            {project.links.github && (
-              <a
-                className="underline"
-                href={project.links.github}
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </a>
-            )}
-            {project.links.demo && (
-              <a
-                className="underline"
-                href={project.links.demo}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Demo
-              </a>
-            )}
-            {project.links.paper && (
-              <a
-                className="underline"
-                href={project.links.paper}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Paper
-              </a>
-            )}
-          </div>
-        )}
-      </main>
-    );
-  }
-  
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) notFound();
+
+  return (
+    <motion.main
+      className="max-w-4xl mx-auto px-6 py-12"
+      variants={stagger}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.h1
+        className="text-3xl md:text-4xl font-bold mb-2"
+        variants={fadeUp}
+      >
+        {project.title}
+      </motion.h1>
+
+      <motion.p className="text-sm text-gray-400 mb-6" variants={fadeUp}>
+        {project.year}
+      </motion.p>
+
+      {!!project.cover && (
+        <motion.div
+          className="relative w-full aspect-[16/9] mb-8 overflow-hidden rounded-xl border border-white/10"
+          variants={fadeUp}
+        >
+          <Image
+            src={project.cover}
+            alt={project.title}
+            fill
+            className="object-cover"
+          />
+        </motion.div>
+      )}
+
+      <motion.p className="text-lg leading-7 mb-6" variants={fadeUp}>
+        {project.summary}
+      </motion.p>
+
+      {project.tags?.length ? (
+        <motion.ul
+          className="flex flex-wrap gap-2 mb-8"
+          variants={fadeUp}
+        >
+          {project.tags.map((t) => (
+            <li
+              key={t}
+              className="px-3 py-1 rounded-full bg-white/10 text-sm"
+            >
+              {t}
+            </li>
+          ))}
+        </motion.ul>
+      ) : null}
+
+      {project.body && (
+        <motion.article
+          className="prose prose-invert max-w-none"
+          variants={fadeUp}
+        >
+          {project.body}
+        </motion.article>
+      )}
+
+      {project.links && (
+        <motion.div className="mt-8 flex gap-4" variants={fadeUp}>
+          {project.links.github && (
+            <a
+              className="underline"
+              href={project.links.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          )}
+          {project.links.demo && (
+            <a
+              className="underline"
+              href={project.links.demo}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Demo
+            </a>
+          )}
+          {project.links.paper && (
+            <a
+              className="underline"
+              href={project.links.paper}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Paper
+            </a>
+          )}
+        </motion.div>
+      )}
+    </motion.main>
+  );
+}

@@ -53,7 +53,7 @@ export type Project = {
         "A novel robotic framework leveraging Gemini 2.0 multimodal models for real-time multilingual command interpretation, environment scanning, and autonomous object retrieval on an NVIDIA Jetson Nano platform with integrated robotic arm, Intel RealSense depth camera, and LiDAR.",
       tags: [
         "Robotics",
-        "LLM",
+        "LLM",  
         "Object Detection",
         "Navigation",
         "Autonomous Systems"

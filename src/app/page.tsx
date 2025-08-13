@@ -47,11 +47,11 @@ export default function Home() {
               className="object-cover w-full h-full"
             />
           </div>
-          <div className="text-sm text-[#6b5c5c] text-center md:text-right mt-4">
+          {/* <div className="text-sm text-[#6b5c5c] text-center md:text-right mt-4">
             <p>555 your office number</p>
             <p>123 your address street</p>
             <p>Your City, State 12345</p>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Left column */}
@@ -80,9 +80,15 @@ export default function Home() {
           </motion.p>
 
           <motion.p className="text-[#ffffff]" variants={fadeUp}>
-            I&apos;m an aspiring robotics researcher exploring intelligent
-            systems, computer vision, and AI for embodied agents. Passionate
-            about autonomy, perception, and robotic learning.
+            I&apos;m a senior in Computer Science at LUMS, Pakistan, with a research focus on large language models (LLMs) for real-world safety applications. My current work explores how multimodal LLMs can be used for scalable, multilingual content moderation — particularly to detect harmful or inappropriate advertising in child-oriented online spaces — with the broader goal of improving child safety on the internet.
+          </motion.p>
+
+          <motion.p className="text-[#ffffff] mt-4" variants={fadeUp}>
+            Beyond LLMs, I&apos;m deeply interested in the intersection of robotics and computer science, where intelligent systems can bridge perception, reasoning, and physical interaction. This includes developing computer vision pipelines for real-time scene understanding, building autonomous agents capable of robust navigation and manipulation, and leveraging distributed systems to coordinate large-scale robotic deployments.
+          </motion.p>
+
+          <motion.p className="text-[#ffffff] mt-4" variants={fadeUp}>
+            Whether it&apos;s designing a multilingual voice-controlled fetch robot, building high-accuracy yet cost-efficient AI moderation pipelines, or integrating cloud-based intelligence into edge devices, I&apos;m driven by the challenge of turning cutting-edge algorithms into impactful, reliable, and scalable systems that operate in the real world.
           </motion.p>
 
           <motion.div
