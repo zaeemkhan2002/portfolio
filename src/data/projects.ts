@@ -44,6 +44,27 @@ export type Project = {
       Future directions include onboard inference with upgraded hardware, autonomous search patterns, reflection-aware detection, and deployment in real aquatic environments.
       `
     },
+
+    {
+      slug: "mastani-fetch",
+      title: "Mastani: Fetch for Me",
+      year: "2025",
+      summary:
+        "A novel robotic framework leveraging Gemini 2.0 multimodal models for real-time multilingual command interpretation, environment scanning, and autonomous object retrieval on an NVIDIA Jetson Nano platform with integrated robotic arm, Intel RealSense depth camera, and LiDAR.",
+      tags: [
+        "Robotics",
+        "LLM",
+        "Object Detection",
+        "Navigation",
+        "Autonomous Systems"
+      ],
+      cover: "/mastani.jpg",
+      links: {
+        paper: "/papers/Mastani.pdf"
+      },
+      body: `Mastani: Fetch integrates large video-language models (LLMs) and vision-language models (VLMs) into a real-time robotic pipeline for multilingual voice command understanding, environment scanning, obstacle avoidance, and precision grasping. Implemented on an NVIDIA Jetson Nano, it combines Gemini 2.0 Flash Lite for audio command parsing, Gemini 2.0 VLM for visual object detection, and a Go2Goal navigation algorithm. The system demonstrates robust object retrieval in cluttered indoor environments, pushing the boundary of low-cost, intelligent service robotics.`
+    },
+
     {
       slug: "lumscape",
       title: "LUMScape — Interactive 3D Campus",
