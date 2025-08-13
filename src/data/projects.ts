@@ -58,7 +58,7 @@ export type Project = {
         "Navigation",
         "Autonomous Systems"
       ],
-      cover: "/mastani.jpg",
+      cover: "/mastani.png",
       links: {
         paper: "/papers/Mastani.pdf"
       },
