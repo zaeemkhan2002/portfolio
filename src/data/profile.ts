@@ -50,6 +50,13 @@ export const CONTACT = {
         "Helped in designing and testing of Programming Assignments. Guided 100 students in key concepts related to blockchain; ran tutorials and ~4 hrs/week office hours; developed explanations and support for programming assignments.",
     },
     {
+      title: " Intern - VSI Data Analytics",
+      org: "Systems Limited",
+      when: "June 2025 - July 2025",
+      detail:
+        "Worked with SQL Server Management Studio (SSMS) to design, query, and manage datasets. Gained hands-on experience in SSIS integration for efficient ETL workflows and data pipeline automation.",
+    },
+    {
       title: "Teacher's Assistant — Network Centric Computing",
       org: "LUMS",
       when: "Jan 2025 - May 2025",
