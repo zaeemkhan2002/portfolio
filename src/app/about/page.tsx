@@ -28,7 +28,7 @@ export default function AboutPage() {
             <MapPin size={18} /> {CONTACT.location}
           </p>
 
-          <div className="flex flex-wrapjustify-center md:justify-start gap-3 pt-2">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
             <a
               href={`mailto:${CONTACT.email}`}
               className="inline-flex items-center gap-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 transition-colors border border-slate-700"
