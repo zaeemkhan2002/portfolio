@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #030712;
+  /* Deep slate/gray-950 */
+  --foreground: #f8fafc;
+  /* Slate-50 */
 }
 
 @theme inline {
@@ -12,41 +14,60 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
 }
 
-html, body {
+html,
+body {
   scroll-behavior: smooth;
 }
 
 @supports (font-synthesis-weight: auto) {
-  body { font-synthesis-weight: auto; }
+  body {
+    font-synthesis-weight: auto;
+  }
 }
 
 /* Background pattern */
-body {
-  background-color: #1c122a;
-  background-image: url('/circuit-board.svg');
-  background-repeat: repeat;
-  background-size: auto;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(34, 211, 238, 0.05) 0px, transparent 50%),
+    url('/circuit-board.svg');
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: 100% 100%, 100% 100%, 300px;
+  opacity: 0.4;
+  /* Subtle pattern */
+  pointer-events: none;
 }
 
 /* Walking animation (side to side with flip) */
+/* Wandering animation */
 @keyframes move-robot {
-  0%   { transform: translateX(0) scaleX(1); }
-  49.999% { transform: translateX(90vw) scaleX(1); }
-  50%  { transform: translateX(90vw) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(-1); }
+  0% {
+    transform: translateX(0) scaleX(1);
+  }
+
+  49.999% {
+    transform: translateX(90vw) scaleX(1);
+  }
+
+  50% {
+    transform: translateX(90vw) scaleX(-1);
+  }
+
+  100% {
+    transform: translateX(0) scaleX(-1);
+  }
 }
 
 /* Robot styling — NO opacity here */
@@ -56,10 +77,12 @@ body {
   left: 6px;
   width: 128px;
   height: 128px;
-  z-index: 40;                 /* above content */
+  z-index: 40;
+  /* above content */
   animation: move-robot 36s linear infinite;
   transform-origin: center bottom;
-  pointer-events: none;        /* no clicks */
+  pointer-events: none;
+  /* no clicks */
   user-select: none;
 }
 
@@ -73,7 +96,9 @@ body {
 
 /* Don’t nuke all animations site-wide */
 @media (prefers-reduced-motion: reduce) {
-  .robot-walk { animation: none !important; }
+  .robot-walk {
+    animation: none !important;
+  }
 }
 
 /* Mobile adjustments */
@@ -81,9 +106,11 @@ body {
   .robot-move {
     width: 48px !important;
     height: 48px !important;
-    animation: move-robot 20s linear infinite; /* Faster on mobile */
+    animation: move-robot 20s linear infinite;
+    /* Faster on mobile */
   }
 }
+
 /* 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -93,4 +120,3 @@ body {
     scroll-behavior: auto !important;
   }
 } */
-
