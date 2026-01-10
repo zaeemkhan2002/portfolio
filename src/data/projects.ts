@@ -132,5 +132,24 @@ export const projects: Project[] = [
         
         **Technical Implementation:**
         The system runs a **PID (Proportional-Integral-Derivative) control loop** that reads raw sensor data via I2C, computes the error from the zero-degree horizon, and adjusts servo positions over a 50Hz PWM signal. The design includes a custom handheld frame with a battery for portability, demonstrating fundamental mechatronic principles of sensing, feedback, and real-time actuation.`
+  },
+
+  {
+    slug: "ai-security-cam",
+    title: "AI Security Cam — Interactive Local Surveillance",
+    year: "2026",
+    summary: "A real-time, privacy-preserving security assistant combining YOLO, Whisper, and local LLMs to detect presence, analyze scenes, and hold context-aware conversations without cloud dependencies.",
+    tags: ["Computer Vision", "LLM", "Local AI", "Speech Recognition", "Security", "YOLO"],
+    cover: "/ai-security-cam.png",
+    body: `AI Security Cam is a real-time, multimodal surveillance system that turns a standard lens into an interactive security assistant by combining computer vision, speech recognition, and local large language models.
+    
+    The system uses a webcam and a YOLO-based detector to instantly identify human presence. Simultaneously, a lightweight vision-language model analyzes the scene, generating hidden contextual descriptions that are fed into a locally running LLM. This allows the assistant to "see" and "understand" its environment before speaking.
+    
+    **Key Features:**
+    - **Interactive Communication:** Uses **Whisper** for transcription and **Piper TTS** for speech generation, enabling natural, low-latency conversations.
+    - **Proactive Warnings:** If a detected person remains silent, the system issues context-aware verbal warnings at timed intervals.
+    - **Privacy-First Architecture:** All inference runs locally on the GPU with **no cloud dependencies**, ensuring data privacy while maintaining real-time performance.
+    
+    The result is a fully offline, intelligent security agent capable of distinct presence detection, contextual understanding, and natural human interaction.`
   }
 ];
