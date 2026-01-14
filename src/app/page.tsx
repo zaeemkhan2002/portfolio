@@ -27,7 +27,7 @@ const staggerChildren: Variants = {
 };
 export default function Home() {
   return (
-    <main className="relative min-h-screen pt-24 md:pt-32 pb-12 flex justify-center p-6 overflow-hidden">
+    <main className="relative min-h-screen pt-12 md:pt-20 pb-12 flex justify-center p-6 overflow-hidden">
       <div className="max-w-6xl w-full mx-auto grid md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-20 items-start">
 
         {/* Left Column: Text Content */}
@@ -58,7 +58,36 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <motion.div className="space-y-6 text-lg text-slate-300 leading-relaxed max-w-2xl" variants={fadeUp}>
+
+          <motion.div variants={fadeUp} className="relative py-2">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-purple-900/40 to-cyan-900/40 border border-purple-500/30 backdrop-blur-sm">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                </span>
+                <h3 className="text-purple-200 font-semibold tracking-wide text-sm uppercase">
+                  Latest Research Update
+                </h3>
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                My paper{" "}
+                <span className="font-semibold text-cyan-200">
+                  &quot;Safeguarding Children at Scale&quot;
+                </span>{" "}
+                has been accepted to the{" "}
+                <span className="font-semibold text-white">
+                  Web4Good track at TheWebConference 2026
+                </span>
+                !
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="space-y-6 text-lg text-slate-300 leading-relaxed max-w-2xl"
+            variants={fadeUp}
+          >
             <p>
               I am a senior Computer Science student at <span className="text-cyan-200 font-medium">LUMS</span> with a minor in Robotics, passionate about how intelligent agents can safely collaborate with humans. My research lies at the intersection of <span className="text-cyan-200 font-medium">Distributed Systems</span>, <span className="text-purple-200 font-medium">Large Language Models</span>, and <span className="text-cyan-200 font-medium">Embodied AI</span>.
             </p>

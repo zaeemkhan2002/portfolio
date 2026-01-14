@@ -12,12 +12,15 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "youtube-kids-ad-detection",
-    title: "Cost-Effective Multimodal LLM Detection of Inappropriate YouTube Advertising",
-    year: "2025",
+    title: "Safeguarding Children at Scale: Cost-Effective Multimodal LLM Detection of Inappropriate YouTube Advertising",
+    year: "2026",
     summary: "Large-scale study using multimodal LLMs and a novel DAVSP pipeline to detect inappropriate YouTube ads for children, achieving near state-of-the-art accuracy at 21x lower cost.",
     tags: ["LLM", "Child Safety", "Cost Optimization", "AI Ethics", "Computer Vision"],
     cover: "/yt-llms.png",
-    body: `First large-scale evaluation of multimodal Large Language Models (LLMs) for detecting inappropriate advertising in child-oriented YouTube content, covering 2,466 ads across 10 countries and over 50 languages. We introduced DAVSP — Dynamic Adaptive Visual-Semantic Processing — a novel frame sampling pipeline that, when combined with audio transcriptions and ad metadata, reduced moderation costs by 21.4x while keeping accuracy within 1 percentage point of full video processing. \nOur analysis benchmarked Gemini 2.5 Flash, Claude 4 Sonnet, and GPT-4o on multilingual ad classification, revealing modality-specific failure patterns and key trade-offs between cost and accuracy. The system supports multilingual, cross-cultural moderation, translating transcripts to English for up to a 4-point F1 boost, and achieved an overall 0.89 F1 score with scalable deployment potential. The updated dataset — re-annotated with 2025 YouTube policy changes — and codebook are released to support future research. This work provides a practical blueprint for low-cost, high-coverage AI moderation pipelines that can adapt to evolving policies and protect children at global scale.`
+    body: `**Accepted into the Web4Good track at TheWebConference 2026.**
+    
+    First large-scale evaluation of multimodal Large Language Models (LLMs) for detecting inappropriate advertising in child-oriented YouTube content, covering 2,466 ads across 10 countries and over 50 languages. We introduced DAVSP — Dynamic Adaptive Visual-Semantic Processing — a novel frame sampling pipeline that, when combined with audio transcriptions and ad metadata, reduced moderation costs by 21.4x while keeping accuracy within 1 percentage point of full video processing. 
+    Our analysis benchmarked Gemini 2.5 Flash, Claude 4 Sonnet, and GPT-4o on multilingual ad classification, revealing modality-specific failure patterns and key trade-offs between cost and accuracy. The system supports multilingual, cross-cultural moderation, translating transcripts to English for up to a 4-point F1 boost, and achieved an overall 0.89 F1 score with scalable deployment potential. The updated dataset — re-annotated with 2025 YouTube policy changes — and codebook are released to support future research. This work provides a practical blueprint for low-cost, high-coverage AI moderation pipelines that can adapt to evolving policies and protect children at global scale.`
   },
 
   {
