@@ -1,131 +1,159 @@
 "use client";
 
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowLeft, ExternalLink, Github, FileText } from "lucide-react";
 import type { Project } from "@/data/projects";
+import CoverArt from "@/components/CoverArt";
+import RichText from "@/components/RichText";
+import { fadeUp, staggerSlow } from "@/lib/motion";
 
-const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 12, filter: "blur(2px)" },
-    visible: {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        transition: { duration: 0.5, ease: "easeOut" }
-    }
-};
+export default function ProjectDetails({
+  project,
+  next,
+}: {
+  project: Project;
+  next?: Project;
+}) {
+  const links = [
+    project.links?.demo && {
+      href: project.links.demo,
+      icon: ExternalLink,
+      label: "Live demo",
+      primary: true,
+    },
+    project.links?.github && {
+      href: project.links.github,
+      icon: Github,
+      label: "GitHub repo",
+    },
+    project.links?.paper && {
+      href: project.links.paper,
+      icon: FileText,
+      label: "Read paper",
+    },
+  ].filter(Boolean) as {
+    href: string;
+    icon: typeof Github;
+    label: string;
+    primary?: boolean;
+  }[];
 
-const stagger: Variants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.05
-        }
-    }
-};
-
-export default function ProjectDetails({ project }: { project: Project }) {
-    return (
-        <motion.main
-            className="max-w-4xl mx-auto px-6 py-20"
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
+  return (
+    <motion.main
+      className="shell max-w-4xl py-14 sm:py-20"
+      variants={staggerSlow}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div variants={fadeUp}>
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-cyan-300"
         >
-            <motion.h1
-                className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-100 to-cyan-200"
-                variants={fadeUp}
+          <ArrowLeft size={15} />
+          All work
+        </Link>
+      </motion.div>
+
+      <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-2">
+        {project.research && <span className="chip chip-accent">Research</span>}
+        <span className="chip">{project.category}</span>
+        <span className="chip">{project.year}</span>
+        {project.venue && <span className="chip chip-violet">{project.venue}</span>}
+      </motion.div>
+
+      <motion.h1
+        className="mt-5 text-3xl font-bold leading-[1.12] tracking-tight text-slate-50 sm:text-4xl md:text-[2.75rem]"
+        variants={fadeUp}
+      >
+        {project.title}
+      </motion.h1>
+
+      <motion.p
+        className="mt-5 max-w-3xl text-lg font-light leading-relaxed text-slate-300 sm:text-xl"
+        variants={fadeUp}
+      >
+        {project.summary}
+      </motion.p>
+
+      <motion.div
+        className="panel relative mt-10 aspect-[16/9] w-full overflow-hidden"
+        variants={fadeUp}
+      >
+        {project.cover ? (
+          <Image
+            src={project.cover}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+            priority
+          />
+        ) : (
+          <CoverArt
+            seed={project.slug}
+            label={project.research ? "Research" : project.category}
+          />
+        )}
+      </motion.div>
+
+      {project.tags.length > 0 && (
+        <motion.ul className="mt-8 flex flex-wrap gap-2" variants={fadeUp}>
+          {project.tags.map((t) => (
+            <li key={t} className="chip">
+              {t}
+            </li>
+          ))}
+        </motion.ul>
+      )}
+
+      {project.body && (
+        <motion.article className="mt-10" variants={fadeUp}>
+          <RichText text={project.body} />
+        </motion.article>
+      )}
+
+      {links.length > 0 && (
+        <motion.div
+          className="mt-10 flex flex-wrap gap-3 border-t border-white/[0.07] pt-8"
+          variants={fadeUp}
+        >
+          {links.map(({ href, icon: Icon, label, primary }) => (
+            <a
+              key={label}
+              className={`btn ${primary ? "btn-primary" : "btn-ghost"}`}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
             >
-                {project.title}
-            </motion.h1>
+              <Icon size={16} />
+              {label}
+            </a>
+          ))}
+        </motion.div>
+      )}
 
-            <motion.div className="flex flex-wrap items-center gap-4 mb-8 text-sm" variants={fadeUp}>
-                <span className="bg-slate-800 text-slate-200 px-3 py-1 rounded-full border border-slate-700">
-                    {project.year}
-                </span>
-            </motion.div>
-
-            {!!project.cover && (
-                <motion.div
-                    className="relative w-full aspect-[16/9] mb-12 overflow-hidden rounded-2xl border border-slate-700/50 shadow-2xl"
-                    variants={fadeUp}
-                >
-                    <Image
-                        src={project.cover}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                </motion.div>
-            )}
-
-            {project.tags?.length ? (
-                <motion.ul
-                    className="flex flex-wrap gap-2 mb-8"
-                    variants={fadeUp}
-                >
-                    {project.tags.map((t) => (
-                        <li
-                            key={t}
-                            className="px-3 py-1 rounded-full bg-cyan-900/20 border border-cyan-800/30 text-cyan-300 text-sm"
-                        >
-                            {t}
-                        </li>
-                    ))}
-                </motion.ul>
-            ) : null}
-
-            <motion.p className="text-xl md:text-2xl leading-relaxed font-light text-slate-200 mb-10" variants={fadeUp}>
-                {project.summary}
-            </motion.p>
-
-            {project.body && (
-                <motion.article
-                    className="prose prose-invert prose-lg max-w-none text-slate-300 mb-12"
-                    variants={fadeUp}
-                >
-                    {/* We are rendering plain text here currently, but could use markdown parser if available. 
-              The current data/projects.ts seems to just put text in 'body'. 
-              We'll render it as a paragraph/whitespace-pre-line effectively */}
-                    <div className="whitespace-pre-line">{project.body}</div>
-                </motion.article>
-            )}
-
-            {project.links && (
-                <motion.div className="mt-8 flex flex-wrap gap-4 pt-8 border-t border-slate-800" variants={fadeUp}>
-                    {project.links.github && (
-                        <a
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors"
-                            href={project.links.github}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            GitHub Repo
-                        </a>
-                    )}
-                    {project.links.demo && (
-                        <a
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors"
-                            href={project.links.demo}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Live Demo
-                        </a>
-                    )}
-                    {project.links.paper && (
-                        <a
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium transition-colors"
-                            href={project.links.paper}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Read Paper
-                        </a>
-                    )}
-                </motion.div>
-            )}
-        </motion.main>
-    );
+      {next && (
+        <motion.div variants={fadeUp} className="mt-14">
+          <p className="label mb-3">Next project</p>
+          <Link
+            href={`/projects/${next.slug}`}
+            className="panel panel-hover group flex items-center justify-between gap-6 p-5"
+          >
+            <div className="min-w-0">
+              <h2 className="truncate text-base font-semibold text-slate-100 transition-colors group-hover:text-cyan-300">
+                {next.title}
+              </h2>
+              <p className="mt-1 truncate text-sm text-slate-500">{next.summary}</p>
+            </div>
+            <span className="shrink-0 text-cyan-300/80 transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </motion.div>
+      )}
+    </motion.main>
+  );
 }
