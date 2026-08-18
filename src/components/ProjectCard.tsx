@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink, Github, FileText } from "lucide-react";
@@ -30,20 +29,11 @@ export default function ProjectCard({ p }: { p: Project }) {
           className="absolute inset-0 z-0"
           aria-label={`View ${p.title}`}
         >
-          {p.cover ? (
-            <Image
-              src={p.cover}
-              alt=""
-              fill
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          ) : (
-            <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]">
-              <CoverArt seed={p.slug} label={p.research ? "Research" : p.category} />
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#05070d] via-[#05070d]/25 to-transparent" />
+          {/* Cards always use the generated cover so the grid reads as one
+              set; the real photo, where there is one, leads the detail page. */}
+          <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+            <CoverArt seed={p.slug} label={p.category} />
+          </div>
         </Link>
 
         {/* Year / research / venue */}

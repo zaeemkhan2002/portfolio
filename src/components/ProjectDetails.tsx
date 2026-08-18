@@ -94,7 +94,9 @@ export default function ProjectDetails({
         ) : (
           <CoverArt
             seed={project.slug}
-            label={project.research ? "Research" : project.category}
+            label={project.category}
+            year={project.year}
+            variant="hero"
           />
         )}
       </motion.div>

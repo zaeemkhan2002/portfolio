@@ -43,11 +43,6 @@ export default function Footer() {
             ))}
           </div>
         </div>
-
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/[0.06] pt-6 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {CONTACT.name}</p>
-          <p className="label text-[10px]">Built with Next.js · Deployed on Vercel</p>
-        </div>
       </div>
     </footer>
   );
