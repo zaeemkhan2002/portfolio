@@ -167,6 +167,21 @@ for x, y in ((8, 3), (8, 4), (7, 5), (7, 6), (8, 7), (8, 8), (7, 9), (7, 10), (8
     s.px(x, y, OUT)
 sprites['llm-guardrail-red-teaming'] = s
 
+# ------------------------------------------------------- ensemble (BAGEL)
+# A 3x3 bank of promptcops with five lit: the n=5 of k=9 selection that
+# carries most of the ensemble's accuracy at roughly half the model calls.
+s = S()
+chosen = {(0, 0), (2, 0), (1, 1), (0, 2), (2, 2)}
+for gy in range(3):
+    for gx in range(3):
+        x0, y0 = 1 + gx * 5, 1 + gy * 5
+        on = (gx, gy) in chosen
+        s.box(x0, y0, x0 + 3, y0 + 3, OUT)
+        s.rect(x0 + 1, y0 + 1, x0 + 2, y0 + 2, CYA if on else MET)
+        if on:
+            s.px(x0 + 1, y0 + 1, CYL)
+sprites['bagel-prompt-guardrails'] = s
+
 # ------------------------------------------------------------------ emit
 for slug, sp in sprites.items():
     rows = sp.rows()

@@ -62,6 +62,9 @@ export default function ProjectDetails({
         <span className="chip">{project.category}</span>
         <span className="chip">{project.year}</span>
         {project.venue && <span className="chip chip-violet">{project.venue}</span>}
+        {project.status && (
+          <span className="chip chip-amber">{project.status}</span>
+        )}
       </motion.div>
 
       <motion.h1

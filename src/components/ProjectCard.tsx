@@ -51,6 +51,11 @@ export default function ProjectCard({ p }: { p: Project }) {
               {p.venue}
             </span>
           )}
+          {p.status && (
+            <span className="chip chip-amber px-2 py-0.5 text-[11px] backdrop-blur-sm">
+              {p.status}
+            </span>
+          )}
         </div>
 
         {/* External links */}

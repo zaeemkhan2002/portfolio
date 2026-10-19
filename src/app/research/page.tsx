@@ -28,8 +28,8 @@ export default function ResearchPage() {
           variants={fadeUp}
           className="mt-4 text-lg leading-relaxed text-slate-400"
         >
-          Peer-reviewed work on multimodal content moderation and LLM safety, plus the
-          ongoing threads in robotics and human-aware AI behind it.
+          Published and in-review work on LLM safety and multimodal content moderation,
+          plus the ongoing threads in robotics and human-aware AI behind it.
         </motion.p>
         <motion.div variants={fadeUp} className="mt-6">
           <a
@@ -54,7 +54,7 @@ export default function ResearchPage() {
           viewport={inView}
         >
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-300">
-            Peer-reviewed publications
+            Publications
           </h2>
           <span className="rule" />
         </motion.div>

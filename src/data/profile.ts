@@ -106,6 +106,24 @@ export const PUBLICATIONS: Publication[] = [
     ],
     slug: "youtube-kids-ad-detection",
   },
+  {
+    title:
+      "Efficient and Adaptable Detection of Malicious LLM Prompts via Bootstrap Aggregation",
+    authors:
+      "Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini",
+    venue: "International Conference on Learning Representations",
+    venueShort: "ICLR 2027",
+    year: "2027",
+    note: "Under double-blind review · KAUST, LUMS · Poster at OSDI 2026",
+    status: "Under review",
+    highlights: [
+      "BAGEL detects malicious prompts with an ensemble of 86M-parameter \"promptcop\" classifiers, each fine-tuned on a different attack dataset and sampled stochastically at inference.",
+      "Built the DistilBERT router that predicts the best-suited promptcop, and the per-promptcop threshold calibration that recenters each member's decision boundary before aggregation.",
+      "Ran the multi-turn analysis over 2,400 adversarial conversations, where single-turn promptcops transfer zero-shot to reach F1 0.660 against billion-parameter baselines.",
+      "On a source-disjoint out-of-distribution test set, BAGEL reaches F1 0.757 at a 430M-parameter equivalent, rising to 0.772 at 324M with the router.",
+    ],
+    slug: "bagel-prompt-guardrails",
+  },
 ];
 
 export const RESEARCH = {
@@ -121,6 +139,17 @@ export const RESEARCH = {
         "Analyzed conversation-level attack trajectories to characterize how prompts that fail single-turn guardrail checks succeed cumulatively across multi-turn exchanges.",
       ],
       slug: "llm-guardrail-red-teaming",
+    },
+    {
+      title:
+        "BAGEL: Bootstrap-Aggregated Ensemble Guardrails for Malicious Prompt Detection",
+      points: [
+        "Co-developed BAGEL, an ensemble of 86M-parameter promptcop classifiers each fine-tuned on a distinct attack dataset, selected stochastically at inference so that a new attack family costs one additional fine-tune rather than a full retrain.",
+        "Built the DistilBERT routing layer that predicts the best-suited promptcop under a class-weighted loss, and the per-promptcop threshold calibration that recenters each member's decision boundary at 0.5 before aggregation.",
+        "Led the multi-turn evaluation across 2,400 adversarial conversations from MHJ, SafeMTData, and MTID, showing single-turn promptcops transfer zero-shot to reach F1 0.660 against billion-parameter guardrails.",
+        "Presented as a poster at OSDI 2026; extended version under review at ICLR 2027.",
+      ],
+      slug: "bagel-prompt-guardrails",
     },
     {
       title: "Detecting Misleading YouTube Thumbnails Using Large Language Models",

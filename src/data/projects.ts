@@ -10,6 +10,8 @@ export type Project = {
   research?: boolean;
   /** Optional venue badge, e.g. "WWW 2026" */
   venue?: string;
+  /** Optional progress badge for work that is not finished, e.g. "In progress" */
+  status?: string;
   /** Surfaced on the home page */
   featured?: boolean;
   /** /projects/filename.png in /public — omit to render generated cover art */
@@ -80,6 +82,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "AI & Safety",
     research: true,
+    status: "In progress",
     featured: true,
     summary:
       "An adversarial evaluation pipeline pitting a Gemma-4 31B red model against a BAGEL-guarded Gemini target, measuring how malicious intent that fails single-turn filters succeeds cumulatively across a conversation.",
@@ -96,7 +99,38 @@ export const projects: Project[] = [
     - Converted an exploratory Kaggle notebook into a cluster-deployable evaluation script, deployed on **RunPod GPU infrastructure**.
     - Added incremental CSV checkpointing so long-running simulations survive crashes and stay reproducible across runs — non-negotiable when a single sweep spans hours of GPU time.
 
-    The result is an evaluation lens that treats safety as a property of conversations rather than of messages.`,
+    The target it probes is **BAGEL**, the guardrail ensemble I help build — so the two projects pull against each other on purpose: one tries to catch malicious prompts, the other tries to get past it.
+
+    **Status:** ongoing. Paper in preparation.`,
+  },
+
+  {
+    slug: "bagel-prompt-guardrails",
+    title:
+      "BAGEL: Efficient and Adaptable Detection of Malicious LLM Prompts via Bootstrap Aggregation",
+    year: "2027",
+    category: "AI & Safety",
+    research: true,
+    venue: "ICLR 2027",
+    status: "Under review",
+    summary:
+      "An ensemble of 86M-parameter classifiers, routed by a fine-tuned DistilBERT, that matches billion-parameter LLM guardrails at a fraction of the cost — and absorbs a new attack family with one fine-tune instead of a retrain.",
+    tags: ["LLM Safety", "Guardrails", "Ensemble Methods", "DistilBERT", "Efficiency"],
+    body: `**Under double-blind review at ICLR 2027.** An earlier version was presented as a poster at OSDI 2026 — Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini (KAUST, LUMS).
+
+    Guardrails for malicious prompts force an awkward trade. Black-box moderation APIs are easy to deploy but opaque and slow to adapt; white-box LLM judges are accurate but expensive to run and need retraining whenever a new attack family appears.
+
+    **BAGEL** — Bootstrap AGgregated Ensemble Layer — takes a third path: an ensemble of small specialists we call **promptcops**, each an 86M-parameter model fine-tuned on a different attack dataset. At inference it scores a prompt with a stochastically selected subset of the ensemble rather than all of it, borrowing the variance reduction of bagging. When a new attack family shows up, BAGEL absorbs it by fine-tuning one more promptcop and adding it in.
+
+    **What I worked on:**
+    - **The learned router.** We fine-tune **DistilBERT** (66M) to predict which promptcop best suits an incoming prompt, then substitute it for one of the random draws — mixture-of-experts precision with the ensemble still underneath as a safety net when the router guesses wrong. The nine source datasets differ in size by roughly 243x, so the router trains under a class-weighted loss to stop it collapsing onto the largest one.
+    - **Threshold calibration.** Each promptcop is fine-tuned independently, so their output probabilities share no common decision boundary. We calibrate a threshold per promptcop on a held-out split of its own training data and recenter it at 0.5 before averaging — rather than assuming one global cutoff sits correctly on every member's probability scale.
+    - **Multi-turn evaluation.** I built the multi-turn analysis over 2,400 adversarial conversations drawn from MHJ, SafeMTData, and MTID, comparing a full-conversation strategy against chunk-level scoring. Using only the single-turn promptcops — so genuinely zero-shot on conversational attacks — BAGEL reaches **F1 0.660**, ahead of billion-parameter baselines that post low false-positive rates only by letting attacks through.
+    - Plus the major rewrites that carried the work from the OSDI poster to the current paper.
+
+    **Headline results.** On a held-out, source-disjoint test set built entirely from datasets never used in training or calibration — so the numbers reflect out-of-distribution generalization rather than memorization — BAGEL reaches **F1 0.757 at a 430M-parameter equivalent**, rising to **0.772 at 324M** with the router and fewer ensemble members. That outperforms popular black-box moderation APIs and most white-box baselines, at lower cost.
+
+    The broader claim is that ensembles of small, specialized classifiers can be efficient, interpretable, and adaptable at once — which is what a guardrail has to be when the attacks keep moving.`,
   },
 
   {
@@ -105,7 +139,6 @@ export const projects: Project[] = [
     year: "2025",
     category: "Robotics",
     research: true,
-    featured: true,
     summary:
       "AB-ConvNet — a hybrid architecture coupling a 1D CNN with an entropy-adaptive Bayesian filter for robust, low-latency sEMG gesture control of the Shadow Hand, cutting prediction jitter 5x.",
     tags: ["Robotics", "Deep Learning", "Human-Robot Interaction", "sEMG", "Bayesian Filtering"],
@@ -132,7 +165,6 @@ export const projects: Project[] = [
     year: "2025",
     category: "Robotics",
     research: true,
-    featured: true,
     summary:
       "A multimodal robotic framework on a DJI RoboMaster platform using Gemini 2.0 for real-time multilingual command interpretation, environment scanning, and autonomous object retrieval in cluttered indoor spaces.",
     tags: ["Robotics", "LLM", "Object Detection", "Navigation", "Autonomous Systems"],
@@ -176,7 +208,6 @@ export const projects: Project[] = [
     title: "AI Security Cam — Interactive Local Surveillance",
     year: "2026",
     category: "Systems",
-    featured: true,
     summary:
       "A real-time, privacy-preserving security assistant combining YOLO, Whisper, and local LLMs to detect presence, analyze scenes, and hold context-aware conversations with no cloud dependencies.",
     tags: ["Computer Vision", "LLM", "Local AI", "Speech Recognition", "Security", "YOLO"],
