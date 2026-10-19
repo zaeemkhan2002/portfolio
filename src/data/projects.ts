@@ -10,8 +10,10 @@ export type Project = {
   research?: boolean;
   /** Optional venue badge, e.g. "WWW 2026" */
   venue?: string;
-  /** Optional progress badge for work that is not finished, e.g. "In progress" */
+  /** Optional progress badge, e.g. "Accepted" or "In progress" */
   status?: string;
+  /** How that badge reads: a result to celebrate, or work still in flight */
+  statusTone?: "positive" | "pending";
   /** Surfaced on the home page */
   featured?: boolean;
   /** /projects/filename.png in /public — omit to render generated cover art */
@@ -77,46 +79,49 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "llm-guardrail-red-teaming",
-    title: "Multi-Turn Red-Teaming of LLM Guardrails",
+    slug: "multi-turn-tutor-jailbreaks",
+    title:
+      "Just One More Question: Multi-Turn Jailbreaks Against LLM Tutors for Children",
     year: "2026",
     category: "AI & Safety",
     research: true,
     status: "In progress",
     featured: true,
     summary:
-      "An adversarial evaluation pipeline pitting a Gemma-4 31B red model against a BAGEL-guarded Gemini target, measuring how malicious intent that fails single-turn filters succeeds cumulatively across a conversation.",
-    tags: ["LLM Safety", "Red Teaming", "Adversarial ML", "GPU Infrastructure", "Evaluation"],
-    body: `Most guardrails are graded one message at a time. Real attacks are not shaped like that.
+      "A red-teaming study of whether a child-tutor persona survives a whole conversation: 24 named jailbreak strategies crossed with 84 benchmark questions, 2,016 five-turn conversations against each of three frontier models.",
+    tags: ["LLM Safety", "Child Safety", "Red Teaming", "Multi-Turn Jailbreaks", "Evaluation"],
+    body: `**Paper in preparation**, targeting the Responsible Web track at **WWW 2027**. First author.
 
-    This project builds a **multi-turn red-teaming pipeline** that pairs a **Gemma-4 31B** adversarial "red" model against a Gemini-based target system defended by **BAGEL**, a lightweight ensemble-based malicious-prompt classifier. Rather than scoring isolated prompts, the harness runs extended conversations and tracks how intent escalates turn over turn.
+    Parents and teachers increasingly turn a general-purpose cloud LLM into a children's tutor the cheapest way available: wrap it in a short persona prompt — "you are a friendly math tutor for my 12-year-old" — and hand it over. Benchmark evidence says signalling a young user really does make single-turn answers more age-appropriate. The open question is whether the persona still holds once the conversation keeps going.
 
-    **What it does:**
-    - Simulates adversarial dialogues in which each turn is individually innocuous enough to pass the classifier, then measures whether the *trajectory* lands somewhere the guardrail was meant to prevent.
-    - Analyzes conversation-level attack trajectories to characterize the gap between single-turn and cumulative safety — the cases where a filter is right on every message and wrong about the exchange.
+    Mostly, it does not.
 
-    **Engineering:**
-    - Converted an exploratory Kaggle notebook into a cluster-deployable evaluation script, deployed on **RunPod GPU infrastructure**.
-    - Added incremental CSV checkpointing so long-running simulations survive crashes and stay reproducible across runs — non-negotiable when a single sweep spans hours of GPU time.
+    **The pipeline.** An adaptive attacker model converses for five turns with a target configured as a 12-year-old's tutor, using a persona adapted from MinorBench. We cross **84 harmful questions** from MinorBench and KIDBench, spanning six harm categories, with **24 named jailbreak strategies** drawn from published attacks and jailbreak taxonomies — roleplay and fiction, authority and trust appeals, persuasion, distancing and reverse framing, format tricks, and word substitution. Full crossing means a difference in break rate can be attributed to the strategy rather than to the question, and yields **2,016 conversations per model**.
 
-    The target it probes is **BAGEL**, the guardrail ensemble I help build — so the two projects pull against each other on purpose: one tries to catch malicious prompts, the other tries to get past it.
+    **Judging.** An LLM judge labels every tutor reply as a break, a refusal, or a helpful response, agreeing with human annotators at **Cohen's κ ≈ 0.8**. Scoring turn by turn rather than per conversation is what lets us ask not only whether a tutor breaks, but **when**.
 
-    **Status:** ongoing. Paper in preparation.`,
+    **What we found.** By the fifth turn a break appears in **47% of conversations on Gemini 3.5 Flash-Lite, 71% on GPT-6 Luna, and 41% on Claude Haiku 5.5** — 31%, 60%, and 31% counting only substantive breaks. Most broken conversations break within the first three turns, so the persona does not erode slowly under pressure; it gives way early.
+
+    **Does a better prompt save it?** A system-prompt ablation on Gemini adds MinorBench-style constraints cumulatively — Socratic step-by-step guidance, then a restriction to on-topic questions. The share of conversations containing a break falls from **52% to 37% to 29%**. Better, but nearly three in ten conversations still break under the most restrictive prompt. A persona prompt on its own is not a child-safety mechanism.
+
+    We release the question and strategy sets, every conversation, and the attacker and judge prompts, so the evaluation can be rerun as models change.`,
   },
 
   {
     slug: "bagel-prompt-guardrails",
     title:
       "BAGEL: Efficient and Adaptable Detection of Malicious LLM Prompts via Bootstrap Aggregation",
-    year: "2027",
+    year: "2026",
     category: "AI & Safety",
     research: true,
-    venue: "ICLR 2027",
-    status: "Under review",
+    venue: "OSDI 2026 · Poster",
+    status: "Accepted",
+    statusTone: "positive",
     summary:
       "An ensemble of 86M-parameter classifiers, routed by a fine-tuned DistilBERT, that matches billion-parameter LLM guardrails at a fraction of the cost — and absorbs a new attack family with one fine-tune instead of a retrain.",
     tags: ["LLM Safety", "Guardrails", "Ensemble Methods", "DistilBERT", "Efficiency"],
-    body: `**Under double-blind review at ICLR 2027.** An earlier version was presented as a poster at OSDI 2026 — Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini (KAUST, LUMS).
+    links: { paper: "/papers/bagel-osdi26-poster.pdf" },
+    body: `**Accepted as a poster at OSDI 2026**, a top-tier (A*) systems venue. The extended paper is under double-blind review at **ICLR 2027**. Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini (KAUST, LUMS).
 
     Guardrails for malicious prompts force an awkward trade. Black-box moderation APIs are easy to deploy but opaque and slow to adapt; white-box LLM judges are accurate but expensive to run and need retraining whenever a new attack family appears.
 
@@ -130,7 +135,7 @@ export const projects: Project[] = [
 
     **Headline results.** On a held-out, source-disjoint test set built entirely from datasets never used in training or calibration — so the numbers reflect out-of-distribution generalization rather than memorization — BAGEL reaches **F1 0.757 at a 430M-parameter equivalent**, rising to **0.772 at 324M** with the router and fewer ensemble members. That outperforms popular black-box moderation APIs and most white-box baselines, at lower cost.
 
-    The broader claim is that ensembles of small, specialized classifiers can be efficient, interpretable, and adaptable at once — which is what a guardrail has to be when the attacks keep moving.`,
+    The broader claim is that ensembles of small, specialized classifiers can be efficient, interpretable, and adaptable at once — which is what a guardrail has to be when the attacks keep moving.`
   },
 
   {

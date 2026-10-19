@@ -165,7 +165,7 @@ s = S()
 shield(s, 2, 14, VIO, RED)
 for x, y in ((8, 3), (8, 4), (7, 5), (7, 6), (8, 7), (8, 8), (7, 9), (7, 10), (8, 11)):
     s.px(x, y, OUT)
-sprites['llm-guardrail-red-teaming'] = s
+sprites['multi-turn-tutor-jailbreaks'] = s
 
 # ------------------------------------------------------- ensemble (BAGEL)
 # A 3x3 bank of promptcops with five lit: the n=5 of k=9 selection that

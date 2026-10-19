@@ -176,6 +176,11 @@ export default function Home() {
                 <span className="chip text-[11px] text-emerald-300/90">
                   {pub.status}
                 </span>
+                {pub.extension && (
+                  <span className="chip chip-amber text-[11px]">
+                    {pub.extension.venueShort} · {pub.extension.status}
+                  </span>
+                )}
               </div>
 
               <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-slate-50 transition-colors group-hover:text-cyan-300">

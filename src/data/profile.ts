@@ -61,8 +61,10 @@ export type Publication = {
   status: string;
   /** Canonical link to the paper */
   url?: string;
-  /** How to label that link, e.g. "arXiv" or "ACM DL" */
+  /** Full link text, e.g. "Read on arXiv" */
   urlLabel?: string;
+  /** A later version of the same work elsewhere, e.g. an extended paper under review */
+  extension?: { venueShort: string; status: string };
   highlights: string[];
   slug?: string; // links to a project page when one exists
 };
@@ -79,7 +81,7 @@ export const PUBLICATIONS: Publication[] = [
     note: "*Equal contribution",
     status: "Accepted",
     url: "https://arxiv.org/abs/2607.23739",
-    urlLabel: "arXiv",
+    urlLabel: "Read on arXiv",
     highlights: [
       "Multi-modal LLM pipeline for detecting misleading YouTube thumbnails, accepted at ICWSM 2027.",
       "Led the evaluation of open-weight, locally-run vision-language models (LLaVA-v1.5, Qwen2.5-VL-7B-Instruct) against proprietary frontier models on a cross-cultural dataset of 2,843 videos from eight countries.",
@@ -98,7 +100,7 @@ export const PUBLICATIONS: Publication[] = [
     note: "*Equal contribution · Top-tier (A*) venue",
     status: "Accepted",
     url: "https://dl.acm.org/doi/10.1145/3774904.3793040",
-    urlLabel: "ACM DL",
+    urlLabel: "Read on ACM DL",
     highlights: [
       "Re-annotated a dataset of 2,466 YouTube advertisements under updated 2025 child-safety policies (κ = 0.903).",
       "Proposed DAVSP, a dynamic frame-sampling pipeline reducing multimodal inference cost by ~21x while staying within ~1 F1 point of full-video analysis.",
@@ -111,11 +113,15 @@ export const PUBLICATIONS: Publication[] = [
       "Efficient and Adaptable Detection of Malicious LLM Prompts via Bootstrap Aggregation",
     authors:
       "Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini",
-    venue: "International Conference on Learning Representations",
-    venueShort: "ICLR 2027",
-    year: "2027",
-    note: "Under double-blind review · KAUST, LUMS · Poster at OSDI 2026",
-    status: "Under review",
+    venue:
+      "USENIX Symposium on Operating Systems Design and Implementation — Poster Session",
+    venueShort: "OSDI 2026",
+    year: "2026",
+    note: "Top-tier (A*) systems venue · KAUST, LUMS",
+    status: "Accepted",
+    extension: { venueShort: "ICLR 2027", status: "Extended paper under review" },
+    url: "/papers/bagel-osdi26-poster.pdf",
+    urlLabel: "Read the OSDI poster",
     highlights: [
       "BAGEL detects malicious prompts with an ensemble of 86M-parameter \"promptcop\" classifiers, each fine-tuned on a different attack dataset and sampled stochastically at inference.",
       "Built the DistilBERT router that predicts the best-suited promptcop, and the per-promptcop threshold calibration that recenters each member's decision boundary before aggregation.",
@@ -131,14 +137,15 @@ export const RESEARCH = {
   when: "January 2025 - Present",
   threads: [
     {
-      title:
-        "Multi-Turn Red-Teaming of LLM Guardrails Against Malicious Prompt Escalation",
+      title: "Multi-Turn Jailbreaks Against LLM Tutors for Children",
       points: [
-        `Designed and executed a multi-turn red-teaming pipeline pairing a Gemma-4 31B adversarial "red" model against a Gemini-based target guarded by BAGEL, a lightweight ensemble malicious-prompt classifier, to probe how malicious intent escalates across extended conversations.`,
-        "Converted an exploratory Kaggle notebook into a cluster-deployable evaluation script on RunPod GPU infrastructure, with incremental CSV checkpointing for crash recovery and reproducibility across long-running simulations.",
-        "Analyzed conversation-level attack trajectories to characterize how prompts that fail single-turn guardrail checks succeed cumulatively across multi-turn exchanges.",
+        "Built a multi-turn red-teaming pipeline in which an adaptive attacker converses for five turns with a cloud LLM configured as a 12-year-old's tutor, crossing 84 harmful questions from MinorBench and KIDBench with 24 named jailbreak strategies for 2,016 conversations per model.",
+        "Measured turn-level outcomes with an LLM judge agreeing with human annotators at Cohen's κ ≈ 0.8, finding breaks in 47%, 71%, and 41% of conversations on Gemini 3.5 Flash-Lite, GPT-6 Luna, and Claude Haiku 5.5 — most within the first three turns.",
+        "Ran a system-prompt ablation showing cumulative tutoring constraints cut the share of broken conversations from 52% to 29%, while still leaving nearly three in ten broken: a persona prompt alone is not a child-safety mechanism.",
+        "Converted exploratory notebooks into cluster-deployable evaluation scripts on RunPod GPU infrastructure with incremental checkpointing, so long sweeps survive crashes and stay reproducible.",
+        "First author; paper in preparation for the Responsible Web track at WWW 2027.",
       ],
-      slug: "llm-guardrail-red-teaming",
+      slug: "multi-turn-tutor-jailbreaks",
     },
     {
       title:
@@ -147,7 +154,7 @@ export const RESEARCH = {
         "Co-developed BAGEL, an ensemble of 86M-parameter promptcop classifiers each fine-tuned on a distinct attack dataset, selected stochastically at inference so that a new attack family costs one additional fine-tune rather than a full retrain.",
         "Built the DistilBERT routing layer that predicts the best-suited promptcop under a class-weighted loss, and the per-promptcop threshold calibration that recenters each member's decision boundary at 0.5 before aggregation.",
         "Led the multi-turn evaluation across 2,400 adversarial conversations from MHJ, SafeMTData, and MTID, showing single-turn promptcops transfer zero-shot to reach F1 0.660 against billion-parameter guardrails.",
-        "Presented as a poster at OSDI 2026; extended version under review at ICLR 2027.",
+        "Accepted as a poster at OSDI 2026, a top-tier (A*) systems venue; the extended paper is under double-blind review at ICLR 2027.",
       ],
       slug: "bagel-prompt-guardrails",
     },

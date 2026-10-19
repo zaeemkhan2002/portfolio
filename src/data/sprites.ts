@@ -158,7 +158,7 @@ export const SPRITES: Record<string, string[]> = {
     ".......22.......",
     "................",
   ],
-  "llm-guardrail-red-teaming": [
+  "multi-turn-tutor-jailbreaks": [
     "................",
     "................",
     "..999999999999..",

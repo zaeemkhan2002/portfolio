@@ -219,6 +219,12 @@ body::after {
   color: #a5f0fb;
 }
 
+.chip-emerald {
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.12);
+  color: #6ee7b7;
+}
+
 .chip-amber {
   border-color: rgba(245, 158, 11, 0.3);
   background: rgba(245, 158, 11, 0.12);

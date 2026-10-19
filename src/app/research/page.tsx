@@ -79,6 +79,11 @@ export default function ResearchPage() {
                 <span className="chip text-[11px] text-emerald-300/90">
                   {pub.status}
                 </span>
+                {pub.extension && (
+                  <span className="chip chip-amber text-[11px]">
+                    {pub.extension.venueShort} · {pub.extension.status}
+                  </span>
+                )}
                 {pub.note && (
                   <span className="text-xs text-slate-600">{pub.note}</span>
                 )}
@@ -108,7 +113,7 @@ export default function ResearchPage() {
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-300/90 transition-colors hover:text-cyan-200"
                   >
                     <FileText size={15} />
-                    Read on {pub.urlLabel ?? "publisher site"}
+                    {pub.urlLabel ?? "Read the paper"}
                   </a>
                 )}
                 {pub.slug && (
