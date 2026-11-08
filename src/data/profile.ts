@@ -21,7 +21,7 @@ export const DEGREE = {
   cgpa: "3.90",
   major: "3.97",
   school: "BSc (Hons.) Computer Science, LUMS",
-  honor: "Graduated with High Distinction",
+  honor: "High Distinction",
 };
 
 export const TAGLINE =

@@ -12,7 +12,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { CONTACT, DEGREE, FOCUS, PUBLICATIONS, ROLE, TAGLINE } from "@/data/profile";
+import { CONTACT, DEGREE, FOCUS, PUBLICATIONS, ROLE } from "@/data/profile";
 import { featuredProjects } from "@/data/projects";
 import ProjectCard from "@/components/ProjectCard";
 import { fadeUp, inView, stagger, staggerSlow } from "@/lib/motion";
@@ -53,23 +53,15 @@ export default function Home() {
               variants={fadeUp}
               className="mt-6 max-w-xl text-lg leading-relaxed text-muted"
             >
-              {TAGLINE}
+              I&apos;m a Computer Science graduate of{" "}
+              <span className="font-medium text-ink">LUMS</span> —{" "}
+              <span className="font-medium text-ink">CGPA {DEGREE.cgpa}</span>,{" "}
+              {DEGREE.major} in major, graduated with {DEGREE.honor} — and now a
+              Research Associate there. I work at the intersection of embodied
+              robotics and human-aware AI, building systems that reason under
+              uncertainty to act, ask, or defer in ways humans can trust.
             </motion.p>
 
-            <motion.div
-              variants={fadeUp}
-              className="mt-7 flex items-center gap-4 border-l-2 border-accent/40 pl-4"
-            >
-              <span className="text-4xl font-semibold leading-none tracking-tight text-accent-ink sm:text-[2.75rem]">
-                {DEGREE.cgpa}
-              </span>
-              <span className="text-sm leading-snug text-muted">
-                <span className="block font-medium text-ink">
-                  CGPA · {DEGREE.school}
-                </span>
-                {DEGREE.major} in major · {DEGREE.honor}
-              </span>
-            </motion.div>
 
             <motion.ul variants={fadeUp} className="mt-8 flex flex-wrap gap-2">
               {FOCUS.map((f) => (
