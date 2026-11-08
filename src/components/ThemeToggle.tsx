@@ -5,31 +5,22 @@ import { Moon, Sun } from "lucide-react";
 
 type Theme = "light" | "dark";
 
-/** What the page is actually showing right now. */
+/**
+ * What the page is showing. Light is the default for everyone — the OS
+ * preference is deliberately ignored — so dark only ever comes from a pin
+ * the visitor set here.
+ */
 function current(): Theme {
-  const pinned = document.documentElement.dataset.theme;
-  if (pinned === "light" || pinned === "dark") return pinned;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
 export default function ThemeToggle() {
-  // Rendered as light on the server; corrected on mount, so the button never
-  // disagrees with the paint the inline script in layout.tsx already made.
   const [theme, setTheme] = useState<Theme>("light");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setTheme(current());
     setReady(true);
-
-    // While nothing is pinned the page follows the OS, so the button has to
-    // follow it too — otherwise its label describes the wrong direction.
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const sync = () => {
-      if (!document.documentElement.dataset.theme) setTheme(current());
-    };
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
   }, []);
 
   function toggle() {

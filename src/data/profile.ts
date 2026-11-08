@@ -16,8 +16,13 @@ export const ROLE = "Research Associate @ LUMS";
 /** Shown as tags in the hero, in place of the old "Current focus" card. */
 export const FOCUS = ["LLM Security", "Child Safety", "Embodied Intelligence"];
 
-/** Degree line, short enough to sit in the hero chip row. */
-export const DEGREE = "BSc CS, LUMS · CGPA 3.90";
+/** Degree and result, shown prominently in the hero. */
+export const DEGREE = {
+  cgpa: "3.90",
+  major: "3.97",
+  school: "BSc (Hons.) Computer Science, LUMS",
+  honor: "Graduated with High Distinction",
+};
 
 export const TAGLINE =
   "I research the intersection of embodied robotics and human-aware AI, designing systems that reason under uncertainty to act, ask, or defer in ways humans can trust.";

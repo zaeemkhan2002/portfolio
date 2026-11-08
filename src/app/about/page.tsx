@@ -225,7 +225,7 @@ export default function AboutPage() {
                   </h3>
                   <p className="text-sm text-accent-ink/80">{e.degree}</p>
                   {e.cgpa && (
-                    <p className="font-mono text-xs text-muted">{e.cgpa}</p>
+                    <p className="font-mono text-sm font-medium text-accent-ink">{e.cgpa}</p>
                   )}
                   {e.honor && (
                     <p className="text-xs font-medium text-ok">

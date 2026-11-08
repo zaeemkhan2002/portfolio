@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   FileText,
   Github,
-  GraduationCap,
   Linkedin,
   Mail,
   MapPin,
@@ -40,10 +39,6 @@ export default function Home() {
                 <MapPin size={13} />
                 {CONTACT.location}
               </span>
-              <span className="chip">
-                <GraduationCap size={13} />
-                {DEGREE}
-              </span>
             </motion.div>
 
             <motion.h1
@@ -60,6 +55,21 @@ export default function Home() {
             >
               {TAGLINE}
             </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              className="mt-7 flex items-center gap-4 border-l-2 border-accent/40 pl-4"
+            >
+              <span className="text-4xl font-semibold leading-none tracking-tight text-accent-ink sm:text-[2.75rem]">
+                {DEGREE.cgpa}
+              </span>
+              <span className="text-sm leading-snug text-muted">
+                <span className="block font-medium text-ink">
+                  CGPA · {DEGREE.school}
+                </span>
+                {DEGREE.major} in major · {DEGREE.honor}
+              </span>
+            </motion.div>
 
             <motion.ul variants={fadeUp} className="mt-8 flex flex-wrap gap-2">
               {FOCUS.map((f) => (

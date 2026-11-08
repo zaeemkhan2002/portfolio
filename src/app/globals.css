@@ -3,9 +3,10 @@
 /* ============================================================
    Design tokens
 
-   Light is the base. Dark applies when the OS asks for it (unless the
-   visitor has pinned light) and whenever data-theme="dark" is set, which
-   the navbar toggle and the inline script in layout.tsx both do.
+   Light is the default for everyone. Dark is opt-in: it applies only when
+   data-theme="dark" is set, which the navbar toggle writes and the inline
+   script in layout.tsx replays on the next visit. The OS preference is
+   deliberately not consulted.
    ============================================================ */
 :root {
   color-scheme: light;
@@ -104,55 +105,6 @@
   --grad-to: #a78bfa;
 }
 
-/* Same values when the OS asks for dark, unless the visitor pinned light. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-
-    --bg: #05070d;
-    --surface: #0a0f1a;
-    --ink: #f1f6fd;
-    --body: #c4d1e3;
-    --muted: #8a99b0;
-    --faint: #66768f;
-
-    --line: rgba(148, 178, 214, 0.12);
-    --line-strong: rgba(148, 178, 214, 0.26);
-    --raise: rgba(255, 255, 255, 0.03);
-    --grid: rgba(148, 178, 214, 0.12);
-
-    --accent: #22d3ee;
-    --accent-ink: #67e8f9;
-    --accent-soft: rgba(34, 211, 238, 0.12);
-    --accent-border: rgba(34, 211, 238, 0.28);
-    --accent-2: #a78bfa;
-    --accent-2-ink: #d6c9ff;
-    --accent-2-soft: rgba(167, 139, 250, 0.14);
-    --accent-2-border: rgba(167, 139, 250, 0.28);
-
-    --ok: #6ee7b7;
-    --ok-soft: rgba(52, 211, 153, 0.12);
-    --ok-border: rgba(52, 211, 153, 0.3);
-    --warn: #fcd34d;
-    --warn-soft: rgba(245, 158, 11, 0.12);
-    --warn-border: rgba(245, 158, 11, 0.3);
-
-    --panel-bg: rgba(10, 15, 26, 0.6);
-    --panel-sheen: rgba(255, 255, 255, 0.035);
-    --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
-    --panel-shadow-hover: 0 26px 60px -28px rgba(0, 0, 0, 0.95);
-    --panel-inset: rgba(255, 255, 255, 0.05);
-
-    --nav-bg: rgba(8, 13, 23, 0.7);
-    --btn-fg: #04121a;
-    --glow-a: rgba(34, 211, 238, 0.1);
-    --glow-b: rgba(167, 139, 250, 0.08);
-
-    --grad-from: #ffffff;
-    --grad-mid: #22d3ee;
-    --grad-to: #a78bfa;
-  }
-}
 
 @theme inline {
   --color-bg: var(--bg);
