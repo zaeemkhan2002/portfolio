@@ -18,7 +18,7 @@ export type Project = {
   featured?: boolean;
   /** /projects/filename.png in /public — omit to render generated cover art */
   cover?: string;
-  links?: { github?: string; demo?: string; paper?: string };
+  links?: { github?: string; demo?: string; paper?: string; poster?: string };
   body?: string; // optional short markdown-ish text
 };
 
@@ -120,7 +120,10 @@ export const projects: Project[] = [
     summary:
       "An ensemble of 86M-parameter classifiers, routed by a fine-tuned DistilBERT, that matches billion-parameter LLM guardrails at a fraction of the cost — and absorbs a new attack family with one fine-tune instead of a retrain.",
     tags: ["LLM Safety", "Guardrails", "Ensemble Methods", "DistilBERT", "Efficiency"],
-    links: { paper: "/papers/bagel-osdi26-poster.pdf" },
+    links: {
+      paper: "https://arxiv.org/abs/2602.08062",
+      poster: "/papers/bagel-osdi26-poster.pdf",
+    },
     body: `**Accepted as a poster at OSDI 2026**, a top-tier (A*) systems venue. The extended paper is under double-blind review at **ICLR 2027**. Shayan Ali Hassan, Zaeem Mohtashim Khan, Tao Ni, Zafar Ayyub Qazi, Marco Canini (KAUST, LUMS).
 
     Guardrails for malicious prompts force an awkward trade. Black-box moderation APIs are easy to deploy but opaque and slow to adapt; white-box LLM judges are accurate but expensive to run and need retraining whenever a new attack family appears.

@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github, FileText } from "lucide-react";
+import {
+  ArrowLeft,
+  ExternalLink,
+  FileText,
+  Github,
+  Presentation,
+} from "lucide-react";
 import type { Project } from "@/data/projects";
 import CoverArt from "@/components/CoverArt";
 import RichText from "@/components/RichText";
@@ -33,6 +39,11 @@ export default function ProjectDetails({
       icon: FileText,
       label: "Read paper",
     },
+    project.links?.poster && {
+      href: project.links.poster,
+      icon: Presentation,
+      label: "Poster PDF",
+    },
   ].filter(Boolean) as {
     href: string;
     icon: typeof Github;
@@ -50,7 +61,7 @@ export default function ProjectDetails({
       <motion.div variants={fadeUp}>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-cyan-300"
+          className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-accent-ink"
         >
           <ArrowLeft size={15} />
           All work
@@ -74,14 +85,14 @@ export default function ProjectDetails({
       </motion.div>
 
       <motion.h1
-        className="mt-5 text-3xl font-bold leading-[1.12] tracking-tight text-slate-50 sm:text-4xl md:text-[2.75rem]"
+        className="mt-5 text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl md:text-[2.75rem]"
         variants={fadeUp}
       >
         {project.title}
       </motion.h1>
 
       <motion.p
-        className="mt-5 max-w-3xl text-lg font-light leading-relaxed text-slate-300 sm:text-xl"
+        className="mt-5 max-w-3xl text-lg font-light leading-relaxed text-body sm:text-xl"
         variants={fadeUp}
       >
         {project.summary}
@@ -128,7 +139,7 @@ export default function ProjectDetails({
 
       {links.length > 0 && (
         <motion.div
-          className="mt-10 flex flex-wrap gap-3 border-t border-white/[0.07] pt-8"
+          className="mt-10 flex flex-wrap gap-3 border-t border-line pt-8"
           variants={fadeUp}
         >
           {links.map(({ href, icon: Icon, label, primary }) => (
@@ -154,12 +165,12 @@ export default function ProjectDetails({
             className="panel panel-hover group flex items-center justify-between gap-6 p-5"
           >
             <div className="min-w-0">
-              <h2 className="truncate text-base font-semibold text-slate-100 transition-colors group-hover:text-cyan-300">
+              <h2 className="truncate text-base font-semibold text-ink transition-colors group-hover:text-accent-ink">
                 {next.title}
               </h2>
-              <p className="mt-1 truncate text-sm text-slate-500">{next.summary}</p>
+              <p className="mt-1 truncate text-sm text-muted">{next.summary}</p>
             </div>
-            <span className="shrink-0 text-cyan-300/80 transition-transform duration-300 group-hover:translate-x-1">
+            <span className="shrink-0 text-accent-ink/80 transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
           </Link>

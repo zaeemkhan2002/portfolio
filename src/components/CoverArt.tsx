@@ -160,8 +160,10 @@ export default function CoverArt({
           isHero ? "pb-4" : "pb-3"
         }`}
       >
-        {label && <span className="label text-[10px] text-cyan-300/70">{label}</span>}
-        {year && <span className="label text-[10px] text-slate-500">{year}</span>}
+        {label && (
+          <span className="label text-[10px] text-[#67e8f9]/80">{label}</span>
+        )}
+        {year && <span className="label text-[10px] text-[#8a99b0]">{year}</span>}
       </div>
 
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05070d] via-transparent to-transparent" />

@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Home, FolderOpen, User, FileDown, BookMarked } from "lucide-react";
+import { Home, FolderOpen, User, FileDown } from "lucide-react";
 import { CONTACT } from "@/data/profile";
+import ThemeToggle from "@/components/ThemeToggle";
 
+// Research and projects live on one page: the research is the work.
 const links = [
   { href: "/", label: "Home", icon: Home },
   { href: "/projects", label: "Work", icon: FolderOpen },
-  { href: "/research", label: "Research", icon: BookMarked },
   { href: "/about", label: "About", icon: User },
 ];
 
@@ -34,12 +35,12 @@ export default function Navbar() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={[
             "pointer-events-auto relative flex items-center gap-1 rounded-full p-1.5",
-            "border border-white/[0.09] bg-[#080d17]/70",
+            "border border-line bg-[var(--nav-bg)]",
             "backdrop-blur-xl backdrop-saturate-150",
             "transition-shadow duration-500",
             scrolled
-              ? "shadow-[0_18px_50px_-24px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,255,255,0.07)]"
-              : "shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
+              ? "shadow-[var(--panel-shadow)]"
+              : "shadow-none",
           ].join(" ")}
         >
           <ul className="flex items-center gap-0.5">
@@ -55,8 +56,8 @@ export default function Navbar() {
                       "relative z-10 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium",
                       "transition-colors duration-200",
                       active
-                        ? "text-cyan-200"
-                        : "text-slate-400 hover:text-slate-100",
+                        ? "text-accent-ink"
+                        : "text-muted hover:text-ink",
                     ].join(" ")}
                   >
                     <Icon size={15} strokeWidth={2} />
@@ -67,7 +68,7 @@ export default function Navbar() {
                     <motion.span
                       layoutId="nav-pill"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      className="absolute inset-0 rounded-full border border-cyan-400/25 bg-cyan-400/[0.11] shadow-[inset_0_1px_0_rgba(255,255,255,0.09)]"
+                      className="absolute inset-0 rounded-full border border-accent/30 bg-accent/12"
                     />
                   )}
                 </li>
@@ -75,18 +76,20 @@ export default function Navbar() {
             })}
           </ul>
 
-          <span className="mx-1 h-5 w-px bg-white/10" />
+          <span className="mx-1 h-5 w-px bg-line" />
 
           <a
             href={CONTACT.resume}
             target="_blank"
             rel="noreferrer"
             aria-label="Download CV"
-            className="flex items-center gap-1.5 rounded-full border border-cyan-400/25 bg-cyan-400/[0.08] px-3.5 py-2 text-sm font-medium text-cyan-200 transition-colors hover:bg-cyan-400/[0.16]"
+            className="flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3.5 py-2 text-sm font-medium text-accent-ink transition-colors hover:bg-accent/20"
           >
             <FileDown size={15} strokeWidth={2} />
             <span className="hidden sm:inline">CV</span>
           </a>
+
+          <ThemeToggle />
         </motion.nav>
       </header>
 

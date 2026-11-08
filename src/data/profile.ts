@@ -13,13 +13,19 @@ export const CONTACT = {
 
 export const ROLE = "Research Associate @ LUMS";
 
+/** Shown as tags in the hero, in place of the old "Current focus" card. */
+export const FOCUS = ["LLM Security", "Child Safety", "Embodied Intelligence"];
+
+/** Degree line, short enough to sit in the hero chip row. */
+export const DEGREE = "BSc CS, LUMS · CGPA 3.90";
+
 export const TAGLINE =
   "I research the intersection of embodied robotics and human-aware AI, designing systems that reason under uncertainty to act, ask, or defer in ways humans can trust.";
 
 export const BIO: string[] = [
-  `I've always been the kid who took toys apart just to see what made them tick. That curiosity started with a simple electronic dog in kindergarten — I remember following it room to room, completely mesmerized by how a machine could seem so... alive. That spark never really left; it just evolved from disassembling toys to building systems that perceive, reason, and act.`,
-  `At LUMS I found my sweet spot at the intersection of Computer Science and Robotics, and graduated with High Distinction in June 2026. I've since stayed on as a Research Associate with Dr. Zafar Ayyub Qazi, working on LLM safety and cross-cultural content moderation. Along the way I've wrestled noisy EMG signals into prosthetic control, red-teamed guardrails across multi-turn conversations, and cut multimodal moderation cost by ~21x without giving up accuracy.`,
-  `The thread running through all of it is uncertainty. A model that commits hard to a wrong answer is worse than one that knows when to hesitate — so I build pipelines that hold a belief rather than a verdict, and that know when to act, when to ask, and when to defer. My goal is to build agents that understand context and collaborate safely with the humans around them.`,
+  `I work on whether language models hold up under pressure. All three of my papers come at that from a different angle: detecting misleading YouTube thumbnails with vision-language models, cutting the cost of multimodal ad moderation on children's content by ~21x, and building BAGEL, an ensemble guardrail that catches malicious prompts for a fraction of what a billion-parameter judge costs. The current one asks what happens when a child-tutor persona meets a five-turn jailbreak. It does not hold.`,
+  `The thread running through all of it is uncertainty. A model that commits hard to a wrong answer is worse than one that knows to hesitate, so I build systems that hold a belief rather than a verdict — a calibrated threshold instead of a global cutoff, an ensemble that recovers when its router guesses wrong, a Bayes filter that coasts through a noisy EMG spike instead of twitching a prosthetic hand. Evaluation gets the same treatment: source-disjoint test sets, turn-level labels, human agreement checks.`,
+  `I got here from the other direction. I was the kid who took toys apart to see what made them tick, and that turned into a Robotics minor alongside Computer Science at LUMS — trash-skimming boats, a RoboMaster that fetches things when you ask it to, gesture control for a Shadow Hand. Embodied work is still where my instincts come from, and it is why I care less about benchmark scores than about what a system does on the messy input it was never shown.`,
 ];
 
 export const EDUCATION = [
@@ -120,8 +126,8 @@ export const PUBLICATIONS: Publication[] = [
     note: "Top-tier (A*) systems venue · KAUST, LUMS",
     status: "Accepted",
     extension: { venueShort: "ICLR 2027", status: "Extended paper under review" },
-    url: "/papers/bagel-osdi26-poster.pdf",
-    urlLabel: "Read the OSDI poster",
+    url: "https://arxiv.org/abs/2602.08062",
+    urlLabel: "Read on arXiv",
     highlights: [
       "BAGEL detects malicious prompts with an ensemble of 86M-parameter \"promptcop\" classifiers, each fine-tuned on a different attack dataset and sampled stochastically at inference.",
       "Built the DistilBERT router that predicts the best-suited promptcop, and the per-promptcop threshold calibration that recenters each member's decision boundary before aggregation.",

@@ -11,18 +11,18 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-white/[0.07]">
+    <footer className="relative mt-24 border-t border-line">
       <div className="shell py-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3">
             <p className="label">Get in touch</p>
             <a
               href={`mailto:${CONTACT.email}`}
-              className="block text-2xl font-semibold tracking-tight text-slate-100 transition-colors hover:text-cyan-300 sm:text-3xl"
+              className="block text-2xl font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink sm:text-3xl"
             >
               {CONTACT.email}
             </a>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-muted">
               {ROLE} · {CONTACT.location}
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="chip px-3 py-2 hover:border-cyan-400/35 hover:text-cyan-200"
+                className="chip px-3 py-2 hover:border-accent/40 hover:text-accent-ink"
               >
                 <Icon size={15} />
                 {label}

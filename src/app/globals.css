@@ -2,30 +2,174 @@
 
 /* ============================================================
    Design tokens
+
+   Light is the base. Dark applies when the OS asks for it (unless the
+   visitor has pinned light) and whenever data-theme="dark" is set, which
+   the navbar toggle and the inline script in layout.tsx both do.
    ============================================================ */
 :root {
-  --background: #05070d;
-  --surface: #0a0f1a;
-  --surface-2: #0e1421;
-  --foreground: #e8eef7;
-  --muted: #8a99b0;
-  --hairline: rgba(148, 178, 214, 0.12);
+  color-scheme: light;
 
-  --accent: #22d3ee;
-  --accent-soft: rgba(34, 211, 238, 0.14);
-  --accent-2: #a78bfa;
-  --accent-2-soft: rgba(167, 139, 250, 0.14);
+  --bg: #f3f6fb;
+  --surface: #ffffff;
+  --ink: #0a111f;
+  --body: #36455f;
+  --muted: #5d6c85;
+  --faint: #8695ac;
+
+  --line: rgba(13, 38, 76, 0.13);
+  --line-strong: rgba(13, 38, 76, 0.24);
+  --raise: rgba(13, 38, 76, 0.04);
+  --grid: rgba(13, 38, 76, 0.07);
+
+  --accent: #0891b2;
+  --accent-ink: #0e7490;
+  --accent-soft: rgba(8, 145, 178, 0.1);
+  --accent-border: rgba(8, 145, 178, 0.3);
+  --accent-2: #7c3aed;
+  --accent-2-ink: #6d28d9;
+  --accent-2-soft: rgba(124, 58, 237, 0.1);
+  --accent-2-border: rgba(124, 58, 237, 0.26);
+
+  --ok: #047857;
+  --ok-soft: rgba(5, 150, 105, 0.12);
+  --ok-border: rgba(5, 150, 105, 0.3);
+  --warn: #b45309;
+  --warn-soft: rgba(217, 119, 6, 0.12);
+  --warn-border: rgba(217, 119, 6, 0.32);
+
+  --panel-bg: rgba(255, 255, 255, 0.76);
+  --panel-sheen: rgba(255, 255, 255, 0.9);
+  --panel-shadow: 0 18px 40px -26px rgba(13, 38, 76, 0.4);
+  --panel-shadow-hover: 0 26px 60px -30px rgba(13, 38, 76, 0.5);
+  --panel-inset: rgba(255, 255, 255, 0.9);
+
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --btn-fg: #ffffff;
+  --glow-a: rgba(8, 145, 178, 0.1);
+  --glow-b: rgba(124, 58, 237, 0.07);
+
+  --grad-from: #0a111f;
+  --grad-mid: #0e7490;
+  --grad-to: #6d28d9;
 
   --radius: 16px;
   --shell: 76rem;
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #05070d;
+  --surface: #0a0f1a;
+  --ink: #f1f6fd;
+  --body: #c4d1e3;
+  --muted: #8a99b0;
+  --faint: #66768f;
+
+  --line: rgba(148, 178, 214, 0.12);
+  --line-strong: rgba(148, 178, 214, 0.26);
+  --raise: rgba(255, 255, 255, 0.03);
+  --grid: rgba(148, 178, 214, 0.12);
+
+  --accent: #22d3ee;
+  --accent-ink: #67e8f9;
+  --accent-soft: rgba(34, 211, 238, 0.12);
+  --accent-border: rgba(34, 211, 238, 0.28);
+  --accent-2: #a78bfa;
+  --accent-2-ink: #d6c9ff;
+  --accent-2-soft: rgba(167, 139, 250, 0.14);
+  --accent-2-border: rgba(167, 139, 250, 0.28);
+
+  --ok: #6ee7b7;
+  --ok-soft: rgba(52, 211, 153, 0.12);
+  --ok-border: rgba(52, 211, 153, 0.3);
+  --warn: #fcd34d;
+  --warn-soft: rgba(245, 158, 11, 0.12);
+  --warn-border: rgba(245, 158, 11, 0.3);
+
+  --panel-bg: rgba(10, 15, 26, 0.6);
+  --panel-sheen: rgba(255, 255, 255, 0.035);
+  --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  --panel-shadow-hover: 0 26px 60px -28px rgba(0, 0, 0, 0.95);
+  --panel-inset: rgba(255, 255, 255, 0.05);
+
+  --nav-bg: rgba(8, 13, 23, 0.7);
+  --btn-fg: #04121a;
+  --glow-a: rgba(34, 211, 238, 0.1);
+  --glow-b: rgba(167, 139, 250, 0.08);
+
+  --grad-from: #ffffff;
+  --grad-mid: #22d3ee;
+  --grad-to: #a78bfa;
+}
+
+/* Same values when the OS asks for dark, unless the visitor pinned light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg: #05070d;
+    --surface: #0a0f1a;
+    --ink: #f1f6fd;
+    --body: #c4d1e3;
+    --muted: #8a99b0;
+    --faint: #66768f;
+
+    --line: rgba(148, 178, 214, 0.12);
+    --line-strong: rgba(148, 178, 214, 0.26);
+    --raise: rgba(255, 255, 255, 0.03);
+    --grid: rgba(148, 178, 214, 0.12);
+
+    --accent: #22d3ee;
+    --accent-ink: #67e8f9;
+    --accent-soft: rgba(34, 211, 238, 0.12);
+    --accent-border: rgba(34, 211, 238, 0.28);
+    --accent-2: #a78bfa;
+    --accent-2-ink: #d6c9ff;
+    --accent-2-soft: rgba(167, 139, 250, 0.14);
+    --accent-2-border: rgba(167, 139, 250, 0.28);
+
+    --ok: #6ee7b7;
+    --ok-soft: rgba(52, 211, 153, 0.12);
+    --ok-border: rgba(52, 211, 153, 0.3);
+    --warn: #fcd34d;
+    --warn-soft: rgba(245, 158, 11, 0.12);
+    --warn-border: rgba(245, 158, 11, 0.3);
+
+    --panel-bg: rgba(10, 15, 26, 0.6);
+    --panel-sheen: rgba(255, 255, 255, 0.035);
+    --panel-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+    --panel-shadow-hover: 0 26px 60px -28px rgba(0, 0, 0, 0.95);
+    --panel-inset: rgba(255, 255, 255, 0.05);
+
+    --nav-bg: rgba(8, 13, 23, 0.7);
+    --btn-fg: #04121a;
+    --glow-a: rgba(34, 211, 238, 0.1);
+    --glow-b: rgba(167, 139, 250, 0.08);
+
+    --grad-from: #ffffff;
+    --grad-mid: #22d3ee;
+    --grad-to: #a78bfa;
+  }
+}
+
 @theme inline {
-  --color-background: var(--background);
+  --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-raise: var(--raise);
   --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
   --color-accent-2: var(--accent-2);
+  --color-accent-2-ink: var(--accent-2-ink);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -39,8 +183,8 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--body);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
   letter-spacing: -0.011em;
@@ -54,14 +198,14 @@ body {
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.25);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--ink);
 }
 
 /* Slim, quiet scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 178, 214, 0.22) transparent;
+  scrollbar-color: var(--line-strong) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -70,12 +214,12 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgba(148, 178, 214, 0.2);
+  background: var(--line-strong);
   border-radius: 999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 178, 214, 0.34);
+  background: var(--accent-border);
 }
 
 /* Consistent keyboard focus */
@@ -93,13 +237,13 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-color: var(--background);
+  background-color: var(--bg);
   background-image:
-    radial-gradient(900px 600px at 12% -5%, rgba(34, 211, 238, 0.10), transparent 60%),
-    radial-gradient(800px 600px at 95% 8%, rgba(167, 139, 250, 0.08), transparent 60%),
-    radial-gradient(1000px 700px at 50% 110%, rgba(34, 211, 238, 0.05), transparent 60%),
-    linear-gradient(var(--hairline) 1px, transparent 1px),
-    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+    radial-gradient(900px 600px at 12% -5%, var(--glow-a), transparent 60%),
+    radial-gradient(800px 600px at 95% 8%, var(--glow-b), transparent 60%),
+    radial-gradient(1000px 700px at 50% 110%, var(--glow-a), transparent 60%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size:
     100% 100%,
     100% 100%,
@@ -116,7 +260,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, transparent 0%, transparent 35%, var(--background) 100%);
+  background: linear-gradient(180deg, transparent 0%, transparent 35%, var(--bg) 100%);
   opacity: 0.65;
   pointer-events: none;
 }
@@ -138,23 +282,23 @@ body::after {
   position: relative;
   border-radius: var(--radius);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
-    rgba(10, 15, 26, 0.6);
-  border: 1px solid var(--hairline);
+    linear-gradient(180deg, var(--panel-sheen), transparent),
+    var(--panel-bg);
+  border: 1px solid var(--line);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
-    0 18px 40px -24px rgba(0, 0, 0, 0.9);
+    0 1px 0 0 var(--panel-inset) inset,
+    var(--panel-shadow);
   transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .panel-hover:hover {
-  border-color: rgba(34, 211, 238, 0.34);
+  border-color: var(--accent-border);
   box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
-    0 26px 60px -28px rgba(0, 0, 0, 0.95),
-    0 0 0 1px rgba(34, 211, 238, 0.08);
+    0 1px 0 0 var(--panel-inset) inset,
+    var(--panel-shadow-hover),
+    0 0 0 1px var(--accent-soft);
 }
 
 /* Corner ticks — a light nod to instrument framing */
@@ -164,7 +308,7 @@ body::after {
   position: absolute;
   width: 12px;
   height: 12px;
-  border-color: rgba(34, 211, 238, 0.4);
+  border-color: var(--accent);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
@@ -195,7 +339,7 @@ body::after {
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--faint);
 }
 
 /* Small pill */
@@ -207,39 +351,70 @@ body::after {
   border-radius: 999px;
   font-size: 0.75rem;
   line-height: 1.2;
-  border: 1px solid var(--hairline);
-  background: rgba(255, 255, 255, 0.03);
-  color: #b9c7db;
+  border: 1px solid var(--line);
+  background: var(--raise);
+  color: var(--muted);
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .chip-accent {
-  border-color: rgba(34, 211, 238, 0.28);
+  border-color: var(--accent-border);
   background: var(--accent-soft);
-  color: #a5f0fb;
+  color: var(--accent-ink);
 }
 
 .chip-emerald {
-  border-color: rgba(52, 211, 153, 0.3);
-  background: rgba(52, 211, 153, 0.12);
-  color: #6ee7b7;
+  border-color: var(--ok-border);
+  background: var(--ok-soft);
+  color: var(--ok);
 }
 
 .chip-amber {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.12);
-  color: #fcd34d;
+  border-color: var(--warn-border);
+  background: var(--warn-soft);
+  color: var(--warn);
 }
 
 .chip-violet {
-  border-color: rgba(167, 139, 250, 0.28);
+  border-color: var(--accent-2-border);
   background: var(--accent-2-soft);
-  color: #d6c9ff;
+  color: var(--accent-2-ink);
+}
+
+/* Badges sitting on top of the cover art, which is dark in both themes */
+.chip-media {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(6, 11, 20, 0.62);
+  color: #dbe6f5;
+}
+
+.chip-media.chip-accent {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(34, 211, 238, 0.2);
+  color: #a5f0fb;
+}
+
+.chip-media.chip-violet {
+  border-color: rgba(167, 139, 250, 0.4);
+  background: rgba(167, 139, 250, 0.22);
+  color: #ddd2ff;
+}
+
+.chip-media.chip-emerald {
+  border-color: rgba(52, 211, 153, 0.4);
+  background: rgba(52, 211, 153, 0.2);
+  color: #8ff0c6;
+}
+
+.chip-media.chip-amber {
+  border-color: rgba(245, 158, 11, 0.42);
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
 }
 
 /* Gradient headline text */
 .grad-text {
-  background: linear-gradient(100deg, #ffffff 0%, #b6e9f5 45%, #22d3ee 78%, #a78bfa 100%);
+  background: linear-gradient(100deg, var(--grad-from) 0%, var(--grad-mid) 58%, var(--grad-to) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -249,7 +424,7 @@ body::after {
 .rule {
   height: 1px;
   flex: 1;
-  background: linear-gradient(90deg, rgba(34, 211, 238, 0.35), transparent);
+  background: linear-gradient(90deg, var(--accent-border), transparent);
 }
 
 /* Buttons */
@@ -269,25 +444,25 @@ body::after {
 }
 
 .btn-primary {
-  color: #04121a;
-  background: linear-gradient(180deg, #67e8f9, #22d3ee);
-  box-shadow: 0 10px 30px -12px rgba(34, 211, 238, 0.7);
+  color: var(--btn-fg);
+  background: var(--accent);
+  box-shadow: 0 10px 30px -14px var(--accent);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 14px 38px -12px rgba(34, 211, 238, 0.85);
+  box-shadow: 0 14px 38px -14px var(--accent);
   transform: translateY(-1px);
 }
 
 .btn-ghost {
-  color: #d6e2f0;
-  border: 1px solid var(--hairline);
-  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: var(--raise);
 }
 
 .btn-ghost:hover {
-  border-color: rgba(34, 211, 238, 0.35);
-  color: #a5f0fb;
+  border-color: var(--accent-border);
+  color: var(--accent-ink);
   transform: translateY(-1px);
 }
 
@@ -333,7 +508,7 @@ body::after {
 }
 
 .copy strong {
-  color: #eaf4ff;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -395,7 +570,7 @@ body::after {
   pointer-events: none;
   user-select: none;
   opacity: 0.85;
-  filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.22));
+  filter: drop-shadow(0 0 18px var(--accent-soft));
 }
 
 @media (max-width: 768px) {

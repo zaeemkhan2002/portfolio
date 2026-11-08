@@ -37,8 +37,8 @@ function SectionTitle({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-slate-300">
-        <Icon size={15} className="text-cyan-400" />
+      <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-body">
+        <Icon size={15} className="text-accent" />
         {children}
       </h2>
       <span className="rule" />
@@ -57,7 +57,7 @@ export default function AboutPage() {
         className="flex flex-col items-center gap-8 text-center md:flex-row md:items-end md:text-left"
       >
         <motion.div variants={fadeUp} className="relative shrink-0">
-          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-cyan-500/20 to-violet-500/20 blur-2xl" />
+          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-accent/20 to-accent-2/20 blur-2xl" />
           <div className="panel relative h-32 w-32 overflow-hidden rounded-[20px] md:h-40 md:w-40">
             <Image
               src="/profile.jpg"
@@ -87,7 +87,7 @@ export default function AboutPage() {
 
           <motion.h1
             variants={fadeUp}
-            className="text-4xl font-bold tracking-[-0.03em] text-slate-50 sm:text-5xl"
+            className="text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl"
           >
             {CONTACT.name}
           </motion.h1>
@@ -107,7 +107,7 @@ export default function AboutPage() {
                 href={href}
                 target="_blank"
                 rel="noreferrer"
-                className="chip px-3 py-2 hover:border-cyan-400/35 hover:text-cyan-200"
+                className="chip px-3 py-2 hover:border-accent/40 hover:text-accent-ink"
               >
                 <Icon size={15} />
                 {label}
@@ -135,7 +135,7 @@ export default function AboutPage() {
               <motion.p
                 key={i}
                 variants={fadeUp}
-                className="text-[1.0625rem] leading-[1.8] text-slate-300/90"
+                className="text-[1.0625rem] leading-[1.8] text-body"
               >
                 {para}
               </motion.p>
@@ -154,7 +154,7 @@ export default function AboutPage() {
               <SectionTitle icon={GraduationCap}>Experience</SectionTitle>
             </motion.div>
 
-            <div className="border-l border-white/[0.09] pl-6 sm:pl-8">
+            <div className="border-l border-line pl-6 sm:pl-8">
               {EXPERIENCE.map((e) => (
                 <motion.article
                   key={e.title + e.when}
@@ -165,16 +165,16 @@ export default function AboutPage() {
                     className={[
                       "absolute -left-[calc(1.5rem+5px)] top-2 h-2.5 w-2.5 rounded-sm border sm:-left-[calc(2rem+5px)]",
                       e.current
-                        ? "border-cyan-400 bg-cyan-400/70"
-                        : "border-white/25 bg-[#05070d] transition-colors group-hover:border-cyan-400/60",
+                        ? "border-accent bg-accent"
+                        : "border-line-strong bg-[#05070d] transition-colors group-hover:border-accent/60",
                     ].join(" ")}
                   />
 
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h3 className="text-lg font-semibold tracking-tight text-slate-100">
+                    <h3 className="text-lg font-semibold tracking-tight text-ink">
                       {e.title}
                       {e.current && (
-                        <span className="ml-2 align-middle text-[10px] font-medium uppercase tracking-[0.14em] text-cyan-300">
+                        <span className="ml-2 align-middle text-[10px] font-medium uppercase tracking-[0.14em] text-accent-ink">
                           Current
                         </span>
                       )}
@@ -182,9 +182,9 @@ export default function AboutPage() {
                     <span className="label shrink-0 text-[10px]">{e.when}</span>
                   </div>
 
-                  <p className="mt-1 text-sm text-cyan-200/70">{e.org}</p>
+                  <p className="mt-1 text-sm text-accent-ink/80">{e.org}</p>
 
-                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-400">
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">
                     {e.detail}
                   </p>
 
@@ -213,29 +213,29 @@ export default function AboutPage() {
         >
           {/* Education */}
           <motion.section variants={fadeUp} className="panel p-6">
-            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">
-              <GraduationCap size={16} className="text-cyan-400" />
+            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-ink">
+              <GraduationCap size={16} className="text-accent" />
               Education
             </h2>
             <div className="space-y-6">
               {EDUCATION.map((e) => (
                 <div key={e.school} className="space-y-1.5">
-                  <h3 className="text-sm font-semibold leading-snug text-slate-100">
+                  <h3 className="text-sm font-semibold leading-snug text-ink">
                     {e.school}
                   </h3>
-                  <p className="text-sm text-cyan-200/70">{e.degree}</p>
+                  <p className="text-sm text-accent-ink/80">{e.degree}</p>
                   {e.cgpa && (
-                    <p className="font-mono text-xs text-slate-500">{e.cgpa}</p>
+                    <p className="font-mono text-xs text-muted">{e.cgpa}</p>
                   )}
                   {e.honor && (
-                    <p className="text-xs font-medium text-emerald-300/85">
+                    <p className="text-xs font-medium text-ok">
                       {e.honor}
                     </p>
                   )}
-                  <p className="text-xs text-slate-600">{e.when}</p>
+                  <p className="text-xs text-faint">{e.when}</p>
                   {e.courses && (
                     <details className="group pt-2">
-                      <summary className="cursor-pointer list-none text-xs text-slate-500 transition-colors hover:text-cyan-300">
+                      <summary className="cursor-pointer list-none text-xs text-muted transition-colors hover:text-accent-ink">
                         Relevant coursework
                         <span className="ml-1 inline-block transition-transform group-open:rotate-90">
                           ›
@@ -257,20 +257,20 @@ export default function AboutPage() {
 
           {/* Awards */}
           <motion.section variants={fadeUp} className="panel p-6">
-            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">
-              <Award size={16} className="text-amber-400" />
+            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-ink">
+              <Award size={16} className="text-warn" />
               Honors &amp; awards
             </h2>
             <ul className="space-y-4">
               {AWARDS.map((a) => (
                 <li
                   key={a.title}
-                  className="border-b border-white/[0.06] pb-4 last:border-0 last:pb-0"
+                  className="border-b border-line pb-4 last:border-0 last:pb-0"
                 >
-                  <p className="text-sm font-medium leading-snug text-slate-200">
+                  <p className="text-sm font-medium leading-snug text-ink">
                     {a.title}
                   </p>
-                  <p className="mt-1 text-xs text-slate-600">
+                  <p className="mt-1 text-xs text-faint">
                     {a.org} · {a.when}
                   </p>
                 </li>
@@ -280,8 +280,8 @@ export default function AboutPage() {
 
           {/* Skills */}
           <motion.section variants={fadeUp} className="panel p-6">
-            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">
-              <Wrench size={16} className="text-cyan-400" />
+            <h2 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-ink">
+              <Wrench size={16} className="text-accent" />
               Skills
             </h2>
             <div className="space-y-4">
@@ -306,14 +306,14 @@ export default function AboutPage() {
 
           {/* Interests */}
           <motion.section variants={fadeUp} className="panel p-6">
-            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">
-              <Heart size={16} className="text-violet-400" />
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-ink">
+              <Heart size={16} className="text-accent-2" />
               Interests
             </h2>
-            <p className="flex flex-wrap gap-x-3 gap-y-1.5 text-sm text-slate-400">
+            <p className="flex flex-wrap gap-x-3 gap-y-1.5 text-sm text-muted">
               {INTERESTS.map((s) => (
                 <span key={s}>
-                  <span className="text-slate-600">#</span>
+                  <span className="text-faint">#</span>
                   {s}
                 </span>
               ))}

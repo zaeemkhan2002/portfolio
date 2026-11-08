@@ -52,7 +52,7 @@ function parse(text: string): Block[] {
  */
 export default function RichText({ text }: { text: string }) {
   return (
-    <div className="copy text-[1.0625rem] text-slate-300/90">
+    <div className="copy text-[1.0625rem] text-body">
       {parse(text).map((b, i) =>
         b.type === "ul" ? (
           <ul key={i}>
