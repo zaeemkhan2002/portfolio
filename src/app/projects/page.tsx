@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, FileDown, FileText } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
 import { CATEGORIES, projects } from "@/data/projects";
-import { CONTACT, PUBLICATIONS, RESEARCH } from "@/data/profile";
+import { CONTACT, PUBLICATIONS, RESEARCH, type Publication } from "@/data/profile";
 import { fadeUp, inView, stagger, staggerSlow } from "@/lib/motion";
 
 type Category = (typeof CATEGORIES)[number];
@@ -35,8 +35,86 @@ function SectionHead({
   );
 }
 
+function PubList({ items }: { items: Publication[] }) {
+  return (
+    <motion.ol
+      className="mt-6 space-y-5"
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={inView}
+    >
+      {items.map((pub) => (
+        <motion.li
+          key={pub.title}
+          variants={fadeUp}
+          className="panel panel-hover ticks group p-6 sm:p-7"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="chip chip-violet font-mono text-[11px]">
+              {pub.venueShort}
+            </span>
+            <span
+              className={`chip text-[11px] ${
+                pub.stage === "published" ? "chip-emerald" : "chip-amber"
+              }`}
+            >
+              {pub.status}
+            </span>
+            {pub.extension && (
+              <span className="chip chip-amber text-[11px]">
+                {pub.extension.venueShort} · {pub.extension.status}
+              </span>
+            )}
+            {pub.note && <span className="text-xs text-faint">{pub.note}</span>}
+          </div>
+
+          <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight text-ink sm:text-[1.375rem]">
+            {pub.title}
+          </h3>
+
+          <p className="mt-3 text-sm leading-relaxed text-muted">{pub.authors}</p>
+          <p className="mt-1.5 text-sm italic text-muted">{pub.venue}</p>
+
+          <ul className="copy mt-5 text-[0.9375rem] text-body">
+            {pub.highlights.map((h, i) => (
+              <li key={i}>{h}</li>
+            ))}
+          </ul>
+
+          <div className="mt-2 flex flex-wrap gap-4">
+            {pub.url && (
+              <a
+                href={pub.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-ink transition-colors hover:text-accent"
+              >
+                <FileText size={15} />
+                {pub.urlLabel ?? "Read the paper"}
+              </a>
+            )}
+            {pub.slug && (
+              <Link
+                href={`/projects/${pub.slug}`}
+                className="inline-flex items-center gap-1 text-sm font-medium text-muted transition-colors hover:text-accent-ink"
+              >
+                Project page
+                <ArrowUpRight size={15} />
+              </Link>
+            )}
+          </div>
+        </motion.li>
+      ))}
+    </motion.ol>
+  );
+}
+
 export default function WorkPage() {
   const [active, setActive] = useState<Category>("All");
+
+  const published = PUBLICATIONS.filter((p) => p.stage === "published");
+  const submitted = PUBLICATIONS.filter((p) => p.stage === "submitted");
 
   // "Research" cuts across domains — a robotics project can also be research —
   // so it filters on the flag while the rest filter on the domain.
@@ -86,72 +164,24 @@ export default function WorkPage() {
       {/* ========================= PUBLICATIONS ========================= */}
       <section className="mt-16">
         <SectionHead>Publications</SectionHead>
-
-        <motion.ol
-          className="mt-6 space-y-5"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inView}
-        >
-          {PUBLICATIONS.map((pub) => (
-            <motion.li
-              key={pub.venueShort}
-              variants={fadeUp}
-              className="panel panel-hover ticks group p-6 sm:p-7"
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="chip chip-violet font-mono text-[11px]">
-                  {pub.venueShort}
-                </span>
-                <span className="chip chip-emerald text-[11px]">{pub.status}</span>
-                {pub.extension && (
-                  <span className="chip chip-amber text-[11px]">
-                    {pub.extension.venueShort} · {pub.extension.status}
-                  </span>
-                )}
-                {pub.note && <span className="text-xs text-faint">{pub.note}</span>}
-              </div>
-
-              <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight text-ink sm:text-[1.375rem]">
-                {pub.title}
-              </h3>
-
-              <p className="mt-3 text-sm leading-relaxed text-muted">{pub.authors}</p>
-              <p className="mt-1.5 text-sm italic text-muted">{pub.venue}</p>
-
-              <ul className="copy mt-5 text-[0.9375rem] text-body">
-                {pub.highlights.map((h, i) => (
-                  <li key={i}>{h}</li>
-                ))}
-              </ul>
-
-              <div className="mt-2 flex flex-wrap gap-4">
-                {pub.url && (
-                  <a
-                    href={pub.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-ink transition-colors hover:text-accent"
-                  >
-                    <FileText size={15} />
-                    {pub.urlLabel ?? "Read the paper"}
-                  </a>
-                )}
-                {pub.slug && (
-                  <Link
-                    href={`/projects/${pub.slug}`}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-muted transition-colors hover:text-accent-ink"
-                  >
-                    Project page
-                    <ArrowUpRight size={15} />
-                  </Link>
-                )}
-              </div>
-            </motion.li>
-          ))}
-        </motion.ol>
+        <PubList items={published} />
       </section>
+
+      {/* ========================= UNDER REVIEW ========================= */}
+      {submitted.length > 0 && (
+        <section className="mt-16">
+          <SectionHead
+            aside={
+              <span className="label shrink-0 text-[10px]">
+                {submitted.length} papers
+              </span>
+            }
+          >
+            Under review
+          </SectionHead>
+          <PubList items={submitted} />
+        </section>
+      )}
 
       {/* ========================= PROJECTS ========================= */}
       <section className="mt-20">

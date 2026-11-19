@@ -24,6 +24,33 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "ai-overviews-ads",
+    title:
+      "Making Room for the Answer: What Google's AI Overviews Advertise, Cite, and Displace",
+    year: "2027",
+    category: "Systems",
+    research: true,
+    venue: "IMC 2027",
+    status: "Under review",
+    summary:
+      "A measurement of 10,068 Google queries asking who pays for the AI Overview: how often it carries ads, where those ads come from, and how much of the first screen it takes from publishers.",
+    tags: ["Web Measurement", "Advertising", "Search", "Transparency", "AI Overviews"],
+    body: `**Under double-blind review at IMC 2027.**
+
+    Google sells ads inside its AI Overviews — the generated answer that now sits above the results — and reports them to advertisers as ordinary top ads. Nobody outside Google could see what that actually does to the page. Advertisers cannot target the placement or opt out of it. Publishers deciding whether to use their new opt-out have no measure of what the AIO costs them. Regulators enforcing attribution rules that explicitly name AIOs have no independent check.
+
+    **The measurement.** We issued **10,068 English queries** on desktop and mobile through US residential connections, and rendered every results page three ways: as served, with the AIO removed and the page re-laid-out, and with the AIO expanded. That third rendering is what exposes ads the user would never scroll to. We also recorded Google's Web mode as a baseline.
+
+    **What we found:**
+    - AI Overviews appeared on **87% of queries**, up from 60% on the same benchmark eleven months earlier. For Amazon product keywords the jump was 17% to 99%.
+    - About **one in ten carries a sponsored block** (10.6% desktop, 9.0% mobile), rising to roughly a third on commercial keywords — but **fewer than 1% of those blocks reach the first screen**. Most stay hidden until the answer is expanded.
+    - Ads go where advertisers already bid: 26% of AIOs on pages that already show ads carry one, against 3% on pages without. **69% of advertisers inside an AIO also advertise elsewhere on the same page**, and the answer rarely cites them — so we find no evidence that sponsorship buys citations.
+    - **The space comes from publishers.** On desktop, first-screen organic results lose **74%** of their area to the AIO while ads lose **44%**. And the AIO cites the publishers it pushes off the screen **less often** than the ones it leaves visible (63% vs 73%).
+
+    We release **AIO-Pages**: 40,268 rendered results pages with element geometry, so others can measure the page as users actually see it.`,
+  },
+
+  {
     slug: "misleading-thumbnails",
     title:
       "Separating Clicks from Baits: LLMs for Detecting Misleading YouTube Thumbnails",
@@ -85,12 +112,13 @@ export const projects: Project[] = [
     year: "2026",
     category: "AI & Safety",
     research: true,
-    status: "In progress",
+    venue: "WWW 2027",
+    status: "Under review",
     featured: true,
     summary:
       "A red-teaming study of whether a child-tutor persona survives a whole conversation: 24 named jailbreak strategies crossed with 84 benchmark questions, 2,016 five-turn conversations against each of three frontier models.",
     tags: ["LLM Safety", "Child Safety", "Red Teaming", "Multi-Turn Jailbreaks", "Evaluation"],
-    body: `**Paper in preparation**, targeting the Responsible Web track at **WWW 2027**. First author.
+    body: `**Submitted to the Responsible Web track at WWW 2027**, under double-blind review. First author.
 
     Parents and teachers increasingly turn a general-purpose cloud LLM into a children's tutor the cheapest way available: wrap it in a short persona prompt — "you are a friendly math tutor for my 12-year-old" — and hand it over. Benchmark evidence says signalling a young user really does make single-turn answers more age-appropriate. The open question is whether the persona still holds once the conversation keeps going.
 
@@ -103,6 +131,8 @@ export const projects: Project[] = [
     **What we found.** By the fifth turn a break appears in **47% of conversations on Gemini 3.5 Flash-Lite, 71% on GPT-6 Luna, and 41% on Claude Haiku 5.5** — 31%, 60%, and 31% counting only substantive breaks. Most broken conversations break within the first three turns, so the persona does not erode slowly under pressure; it gives way early.
 
     **Does a better prompt save it?** A system-prompt ablation on Gemini adds MinorBench-style constraints cumulatively — Socratic step-by-step guidance, then a restriction to on-topic questions. The share of conversations containing a break falls from **52% to 37% to 29%**. Better, but nearly three in ten conversations still break under the most restrictive prompt. A persona prompt on its own is not a child-safety mechanism.
+
+    **Does it survive translation?** A companion short paper, also under review at WWW 2027, re-runs 192 question-strategy pairs three times each in **English, Urdu script and Roman Urdu** — 5,184 conversations. Urdu raises Gemini's substantive break rate by **9.9 points** in Urdu script and 8.7 in Roman Urdu, moves GPT-6 Luna by under 4, and does not make Claude Haiku worse. The two scripts land within 1.7 points of each other, so the gap belongs to the language rather than the script, and Claude's API-level filter fires far less often in Urdu than in English. English results are not a reliable guide to a tutor's safety in Urdu.
 
     We release the question and strategy sets, every conversation, and the attacker and judge prompts, so the evaluation can be rerun as models change.`,
   },
@@ -134,9 +164,10 @@ export const projects: Project[] = [
     - **The learned router.** We fine-tune **DistilBERT** (66M) to predict which promptcop best suits an incoming prompt, then substitute it for one of the random draws — mixture-of-experts precision with the ensemble still underneath as a safety net when the router guesses wrong. The nine source datasets differ in size by roughly 243x, so the router trains under a class-weighted loss to stop it collapsing onto the largest one.
     - **Threshold calibration.** Each promptcop is fine-tuned independently, so their output probabilities share no common decision boundary. We calibrate a threshold per promptcop on a held-out split of its own training data and recenter it at 0.5 before averaging — rather than assuming one global cutoff sits correctly on every member's probability scale.
     - **Multi-turn evaluation.** I built the multi-turn analysis over 2,400 adversarial conversations drawn from MHJ, SafeMTData, and MTID, comparing a full-conversation strategy against chunk-level scoring. Using only the single-turn promptcops — so genuinely zero-shot on conversational attacks — BAGEL reaches **F1 0.660**, ahead of billion-parameter baselines that post low false-positive rates only by letting attacks through.
-    - Plus the major rewrites that carried the work from the OSDI poster to the current paper.
+    - **Dataset hygiene and size.** Audited 14 datasets for exact and near-duplicate overlap, and showed that sharing a single embedding table across the ensemble cuts active parameters by up to **55%** with no loss in accuracy.
+    - Plus the manuscript, evaluation and reviewer rebuttal that carried the work from the OSDI poster to the ICLR submission.
 
-    **Headline results.** On a held-out, source-disjoint test set built entirely from datasets never used in training or calibration — so the numbers reflect out-of-distribution generalization rather than memorization — BAGEL reaches **F1 0.757 at a 430M-parameter equivalent**, rising to **0.772 at 324M** with the router and fewer ensemble members. That outperforms popular black-box moderation APIs and most white-box baselines, at lower cost.
+    **Headline results.** On a held-out, source-disjoint test set built entirely from datasets never used in training or calibration — so the numbers reflect out-of-distribution generalization rather than memorization — BAGEL reaches **F1 0.77 with three ensemble members**, ahead of **ShieldGemma**, **ToxicDetector** and the **OpenAI Moderation API**. It also posts the highest F1 (**0.704**) on zero-shot multi-turn attacks, without any multi-turn fine-tuning.
 
     The broader claim is that ensembles of small, specialized classifiers can be efficient, interpretable, and adaptable at once — which is what a guardrail has to be when the attacks keep moving.`
   },
@@ -164,7 +195,7 @@ export const projects: Project[] = [
     - Reduced prediction jitter **5x** versus raw predictions without sacrificing responsiveness.
     - Validated in a PyBullet simulation controlling a high-DOF dexterous robotic hand.
 
-    **Where it's going:** the approach now anchors an ongoing proposal on a *Hybrid Bayesian-Deep Learning Framework for Intent-Aware Prosthetic Control*, fusing compact sEMG intent classification with a recursive Bayes filter and targeting validation on the public **NinaPro** dataset in 3D simulation. The hypothesis under test is that maintaining an interpretable belief distribution reduces spurious intent switches and improves early detection latency compared to neural-only baselines.`,
+    **Where it went:** the approach became a co-authored paper on a hybrid Bayesian-deep learning framework for intent-aware prosthetic control, fusing compact sEMG intent classification with a recursive Bayes filter and keeping a stable, interpretable belief distribution over user intent rather than committing to a hard class each timestep. We evaluated it against neural-only baselines on the public **NinaPro** dataset in a 3D simulation environment.`,
   },
 
   {

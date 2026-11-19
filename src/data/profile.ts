@@ -25,7 +25,7 @@ export const DEGREE = {
 };
 
 export const TAGLINE =
-  "I research the intersection of embodied robotics and human-aware AI, designing systems that reason under uncertainty to act, ask, or defer in ways humans can trust.";
+  "I research LLM security and Social AI, auditing safety guardrails and detecting malicious prompts in multi-turn settings. I also design agentic systems, including robots, that reason under uncertainty to act, seek human clarification, or defer.";
 
 export const BIO: string[] = [
   `I work on whether language models hold up under pressure. All three of my papers come at that from a different angle: detecting misleading YouTube thumbnails with vision-language models, cutting the cost of multimodal ad moderation on children's content by ~21x, and building BAGEL, an ensemble guardrail that catches malicious prompts for a fraction of what a billion-parameter judge costs. The current one asks what happens when a child-tutor persona meets a five-turn jailbreak. It does not hold.`,
@@ -69,6 +69,8 @@ export type Publication = {
   venueShort: string;
   year: string;
   note?: string;
+  /** Groups the list: peer-reviewed and accepted, or still under review */
+  stage: "published" | "submitted";
   status: string;
   /** Canonical link to the paper */
   url?: string;
@@ -85,11 +87,12 @@ export const PUBLICATIONS: Publication[] = [
     title:
       "Separating Clicks from Baits: Using Large Language Models to Detect Misleading YouTube Thumbnails",
     authors:
-      "Wajiha Naveed, Muhammad Muneeb Pervez*, Zaeem Mohtashim Khan*, Zafar Ayyub Qazi, Zartash Afzal Uzmi",
+      "Wajiha Naveed, Zaeem Mohtashim Khan*, Muhammad Muneeb Pervez*, Zafar Ayyub Qazi, Zartash Afzal Uzmi",
     venue: "International AAAI Conference on Web and Social Media",
     venueShort: "ICWSM 2027",
     year: "2027",
     note: "*Equal contribution",
+    stage: "published",
     status: "Accepted",
     url: "https://arxiv.org/abs/2607.23739",
     urlLabel: "Read on arXiv",
@@ -104,11 +107,12 @@ export const PUBLICATIONS: Publication[] = [
     title:
       "Safeguarding Children at Scale: Cost-Effective Multimodal LLM Detection of Inappropriate YouTube Advertising",
     authors:
-      "Eman Nabeel*, Shizza Asher*, Haleema Jamil*, Zaeem Mohtashim Khan*, Nida Tanveer, Ihsan Ayyub Qazi, Zafar Ayyub Qazi",
+      "Zaeem Mohtashim Khan*, Eman Nabeel*, Shizza Asher*, Haleema Jamil*, Nida Tanveer, Ihsan Ayyub Qazi, Zafar Ayyub Qazi",
     venue: "The Web Conference — Web4Good Track",
     venueShort: "WWW 2026",
     year: "2026",
     note: "*Equal contribution · Top-tier (A*) venue",
+    stage: "published",
     status: "Accepted",
     url: "https://dl.acm.org/doi/10.1145/3774904.3793040",
     urlLabel: "Read on ACM DL",
@@ -129,6 +133,7 @@ export const PUBLICATIONS: Publication[] = [
     venueShort: "OSDI 2026",
     year: "2026",
     note: "Top-tier (A*) systems venue · KAUST, LUMS",
+    stage: "published",
     status: "Accepted",
     extension: { venueShort: "ICLR 2027", status: "Extended paper under review" },
     url: "https://arxiv.org/abs/2602.08062",
@@ -136,10 +141,63 @@ export const PUBLICATIONS: Publication[] = [
     highlights: [
       "BAGEL detects malicious prompts with an ensemble of 86M-parameter \"promptcop\" classifiers, each fine-tuned on a different attack dataset and sampled stochastically at inference.",
       "Built the DistilBERT router that predicts the best-suited promptcop, and the per-promptcop threshold calibration that recenters each member's decision boundary before aggregation.",
-      "Ran the multi-turn analysis over 2,400 adversarial conversations, where single-turn promptcops transfer zero-shot to reach F1 0.660 against billion-parameter baselines.",
-      "On a source-disjoint out-of-distribution test set, BAGEL reaches F1 0.757 at a 430M-parameter equivalent, rising to 0.772 at 324M with the router.",
+      "Reached F1 0.77 out of distribution with three ensemble members, ahead of ShieldGemma, ToxicDetector and the OpenAI Moderation API, and the highest F1 (0.704) on zero-shot multi-turn attacks.",
+      "Audited 14 datasets for exact and near-duplicate overlap, and showed that sharing one embedding table cuts active parameters by up to 55% with no loss in accuracy.",
     ],
     slug: "bagel-prompt-guardrails",
+  },
+  {
+    title:
+      "Just One More Question: Multi-Turn Jailbreaks Against LLM Tutors for Children",
+    authors: "Zaeem Mohtashim Khan et al.",
+    venue: "The Web Conference — Responsible Web Track (full paper)",
+    venueShort: "WWW 2027",
+    year: "2027",
+    note: "First author · under double-blind review",
+    stage: "submitted",
+    status: "Under review",
+    highlights: [
+      "Built a multi-turn red-teaming benchmark crossing 84 harmful questions from MinorBench and KIDBench with 24 named jailbreak strategies, giving 2,016 five-turn conversations per model.",
+      "Ran an adaptive Gemma-4 31B attacker against Gemini 3.5 Flash-Lite, GPT-6 Luna and Claude Haiku 5.5 configured as tutors for a 12-year-old; 41-71% of conversations broke, roughly 2x the single-turn rate.",
+      "Scored every reply with an LLM judge agreeing with human annotators at Cohen's κ ≈ 0.8, finding most broken conversations break within three turns.",
+      "Showed a system-prompt ablation cuts breaks from 52% to 29% but still leaves nearly three in ten conversations broken: a persona prompt alone is not a child-safety mechanism.",
+    ],
+    slug: "multi-turn-tutor-jailbreaks",
+  },
+  {
+    title: "Safe in English, Safe in Urdu? Multi-Turn Safety Benchmarks of LLM Tutors in Urdu",
+    authors: "Zaeem Mohtashim Khan et al.",
+    venue: "The Web Conference — Responsible Web Track (short paper)",
+    venueShort: "WWW 2027",
+    year: "2027",
+    note: "Under double-blind review",
+    stage: "submitted",
+    status: "Under review",
+    highlights: [
+      "Asks whether a tutor persona's child-safety behaviour survives translation: 192 question-strategy pairs run three times each in English, Urdu script and Roman Urdu, for 5,184 conversations across three tutors.",
+      "Urdu raises Gemini's substantive break rate by 9.9 points in Urdu script and 8.7 in Roman Urdu, GPT-6 Luna's by under 4, and does not make Claude Haiku worse.",
+      "The two scripts land within 1.7 points of each other for every tutor, so the gap is a property of the language rather than the script — and Claude's API-level filter fires far less often in Urdu than in English.",
+      "Repeated English runs of the same pair disagreed for 25-46% of pairs, so cross-language safety comparisons need paired, repeated runs rather than single passes.",
+    ],
+  },
+  {
+    title:
+      "Making Room for the Answer: A First Look at What Google's AI Overviews Advertise, Cite, and Displace",
+    authors: "Zaeem Mohtashim Khan et al.",
+    venue: "ACM Internet Measurement Conference",
+    venueShort: "IMC 2027",
+    year: "2027",
+    note: "Under double-blind review",
+    stage: "submitted",
+    status: "Under review",
+    highlights: [
+      "First measurement of ads inside Google's AI Overviews: 10,068 English queries on desktop and mobile from US residential connections, each page captured as served, with the AIO removed, and with it expanded.",
+      "AI Overviews appeared on 87% of queries, up from 60% eleven months earlier. About one in ten carries a sponsored block, rising to roughly a third on commercial keywords — yet fewer than 1% of those blocks reach the first screen.",
+      "Sponsored blocks go where advertisers already bid, and the answer rarely cites them, so we find no evidence that ads inside an AI Overview buy citations.",
+      "The space comes from publishers: first-screen organic results lose 74% of their area on desktop while ads lose 44%, and the AIO cites the publishers it displaces less often than those it keeps in view (63% vs 73%).",
+      "Releases AIO-Pages, 40,268 rendered results pages with element geometry.",
+    ],
+    slug: "ai-overviews-ads",
   },
 ];
 
@@ -148,13 +206,24 @@ export const RESEARCH = {
   when: "January 2025 - Present",
   threads: [
     {
+      title: "Measuring Ads and Displacement in Google's AI Overviews",
+      points: [
+        "First study of ads inside Google's AI Overviews, across 10,068 queries on desktop and mobile from US residential connections, rendering each page as served, with the AIO removed, and with it expanded.",
+        "One in ten AI Overviews carries a sponsored block, and three in ten on commercial queries, but fewer than 1% of these appear in the first viewport.",
+        "AI Overviews displace mostly organic results while ads keep their place, and we find no evidence that ads inside them buy citations.",
+        "Submitted to IMC 2027; releases AIO-Pages, 40,268 rendered results pages with element geometry.",
+      ],
+      slug: "ai-overviews-ads",
+    },
+    {
       title: "Multi-Turn Jailbreaks Against LLM Tutors for Children",
       points: [
         "Built a multi-turn red-teaming pipeline in which an adaptive attacker converses for five turns with a cloud LLM configured as a 12-year-old's tutor, crossing 84 harmful questions from MinorBench and KIDBench with 24 named jailbreak strategies for 2,016 conversations per model.",
         "Measured turn-level outcomes with an LLM judge agreeing with human annotators at Cohen's κ ≈ 0.8, finding breaks in 47%, 71%, and 41% of conversations on Gemini 3.5 Flash-Lite, GPT-6 Luna, and Claude Haiku 5.5 — most within the first three turns.",
         "Ran a system-prompt ablation showing cumulative tutoring constraints cut the share of broken conversations from 52% to 29%, while still leaving nearly three in ten broken: a persona prompt alone is not a child-safety mechanism.",
         "Converted exploratory notebooks into cluster-deployable evaluation scripts on RunPod GPU infrastructure with incremental checkpointing, so long sweeps survive crashes and stay reproducible.",
-        "First author; paper in preparation for the Responsible Web track at WWW 2027.",
+        "Extended the benchmark to Urdu across 5,184 conversations in English, Urdu script and Roman Urdu: Gemini’s breaks rose by up to 10 points while other models barely changed.",
+        "First author; submitted to the Responsible Web track at WWW 2027, with a companion short paper on the Urdu results.",
       ],
       slug: "multi-turn-tutor-jailbreaks",
     },
@@ -165,7 +234,7 @@ export const RESEARCH = {
         "Co-developed BAGEL, an ensemble of 86M-parameter promptcop classifiers each fine-tuned on a distinct attack dataset, selected stochastically at inference so that a new attack family costs one additional fine-tune rather than a full retrain.",
         "Built the DistilBERT routing layer that predicts the best-suited promptcop under a class-weighted loss, and the per-promptcop threshold calibration that recenters each member's decision boundary at 0.5 before aggregation.",
         "Led the multi-turn evaluation across 2,400 adversarial conversations from MHJ, SafeMTData, and MTID, showing single-turn promptcops transfer zero-shot to reach F1 0.660 against billion-parameter guardrails.",
-        "Accepted as a poster at OSDI 2026, a top-tier (A*) systems venue; the extended paper is under double-blind review at ICLR 2027.",
+        "Accepted as a poster at OSDI 2026, a top-tier (A*) systems venue; co-led the manuscript, evaluation and reviewer rebuttal for the extended paper now under double-blind review at ICLR 2027.",
       ],
       slug: "bagel-prompt-guardrails",
     },
@@ -190,9 +259,9 @@ export const RESEARCH = {
       title:
         "Hybrid Bayesian-Deep Learning Framework for Intent-Aware Prosthetic Control",
       points: [
-        "Co-authored a research proposal for a hybrid framework for robust, intent-aware prosthetic arm control, combining discriminative deep learning with probabilistic reasoning.",
-        "Designing a modular pipeline that fuses a compact neural network for sEMG-based intent classification with a recursive Bayes filter, maintaining a stable, interpretable belief distribution over user intent rather than committing to hard classifications at each timestep.",
-        "Targeting validation on the public NinaPro dataset in a 3D simulation environment, hypothesizing that the hybrid approach reduces spurious intent switches and improves early detection latency over neural-only baselines.",
+        "Co-authored a research paper on a hybrid framework for intent-aware prosthetic arm control, combining discriminative deep learning with probabilistic reasoning.",
+        "Built a modular pipeline that fuses a compact neural network for sEMG-based intent classification with a recursive Bayes filter, maintaining a stable, interpretable belief distribution over user intent rather than committing to hard classifications at each timestep.",
+        "Evaluated the approach against neural-only baselines on the public NinaPro dataset in a 3D simulation environment.",
       ],
       slug: "mobile-robotics-research",
     },

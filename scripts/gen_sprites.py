@@ -182,6 +182,24 @@ for gy in range(3):
             s.px(x0 + 1, y0 + 1, CYL)
 sprites['bagel-prompt-guardrails'] = s
 
+# -------------------------------------------------- search page, AI Overview
+# A results page where one tall block sits on top and squeezes the rest:
+# the lit band is the AI Overview, the dim bars the organic results it pushes
+# below the fold.
+s = S()
+s.box(1, 1, 14, 14, OUT)                              # browser frame
+s.rect(2, 2, 13, 3, MET)                              # chrome / search bar
+s.rect(3, 2, 10, 2, LIT)
+s.rect(2, 4, 13, 8, CYD)                              # the AI Overview block
+s.box(2, 4, 13, 8, CYA)
+s.rect(3, 5, 11, 5, CYL)
+s.rect(3, 6, 9, 6, CYA)
+s.rect(10, 7, 12, 7, AMB)                             # sponsored block inside it
+for y in (10, 12):                                    # displaced organic results
+    s.rect(3, y, 11, y, MET)
+    s.rect(3, y + 1, 7, y + 1, OUT)
+sprites['ai-overviews-ads'] = s
+
 # ------------------------------------------------------------------ emit
 for slug, sp in sprites.items():
     rows = sp.rows()

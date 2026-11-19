@@ -18,6 +18,9 @@ import ProjectCard from "@/components/ProjectCard";
 import { fadeUp, inView, stagger, staggerSlow } from "@/lib/motion";
 
 export default function Home() {
+  const published = PUBLICATIONS.filter((p) => p.stage === "published");
+  const underReview = PUBLICATIONS.filter((p) => p.stage === "submitted");
+
   return (
     <main className="relative overflow-hidden pb-8">
       {/* ============================ HERO ============================ */}
@@ -158,7 +161,7 @@ export default function Home() {
           whileInView="visible"
           viewport={inView}
         >
-          {PUBLICATIONS.map((pub) => (
+          {published.map((pub) => (
             <motion.div
               key={pub.venueShort}
               variants={fadeUp}
@@ -217,6 +220,25 @@ export default function Home() {
             </motion.div>
           ))}
         </motion.div>
+
+        {underReview.length > 0 && (
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={inView}
+            className="mt-5 text-sm text-muted"
+          >
+            {underReview.length} more under review at{" "}
+            {[...new Set(underReview.map((p) => p.venueShort))].join(" and ")} —{" "}
+            <Link
+              href="/projects"
+              className="font-medium text-accent-ink transition-colors hover:text-accent"
+            >
+              see all work
+            </Link>
+          </motion.p>
+        )}
       </section>
 
       {/* ========================= FEATURED WORK ========================= */}
