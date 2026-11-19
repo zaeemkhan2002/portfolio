@@ -170,7 +170,7 @@ export const PUBLICATIONS: Publication[] = [
     venue: "The Web Conference — Responsible Web Track (short paper)",
     venueShort: "WWW 2027",
     year: "2027",
-    note: "Under double-blind review",
+    note: "First author · under double-blind review",
     stage: "submitted",
     status: "Under review",
     highlights: [
@@ -187,7 +187,7 @@ export const PUBLICATIONS: Publication[] = [
     venue: "ACM Internet Measurement Conference",
     venueShort: "IMC 2027",
     year: "2027",
-    note: "Under double-blind review",
+    note: "First author · under double-blind review",
     stage: "submitted",
     status: "Under review",
     highlights: [
@@ -211,7 +211,7 @@ export const RESEARCH = {
         "First study of ads inside Google's AI Overviews, across 10,068 queries on desktop and mobile from US residential connections, rendering each page as served, with the AIO removed, and with it expanded.",
         "One in ten AI Overviews carries a sponsored block, and three in ten on commercial queries, but fewer than 1% of these appear in the first viewport.",
         "AI Overviews displace mostly organic results while ads keep their place, and we find no evidence that ads inside them buy citations.",
-        "Submitted to IMC 2027; releases AIO-Pages, 40,268 rendered results pages with element geometry.",
+        "First author; submitted to IMC 2027. Releases AIO-Pages, 40,268 rendered results pages with element geometry.",
       ],
       slug: "ai-overviews-ads",
     },

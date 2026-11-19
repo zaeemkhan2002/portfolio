@@ -35,7 +35,7 @@ export const projects: Project[] = [
     summary:
       "A measurement of 10,068 Google queries asking who pays for the AI Overview: how often it carries ads, where those ads come from, and how much of the first screen it takes from publishers.",
     tags: ["Web Measurement", "Advertising", "Search", "Transparency", "AI Overviews"],
-    body: `**Under double-blind review at IMC 2027.**
+    body: `**Under double-blind review at IMC 2027.** First author.
 
     Google sells ads inside its AI Overviews — the generated answer that now sits above the results — and reports them to advertisers as ordinary top ads. Nobody outside Google could see what that actually does to the page. Advertisers cannot target the placement or opt out of it. Publishers deciding whether to use their new opt-out have no measure of what the AIO costs them. Regulators enforcing attribution rules that explicitly name AIOs have no independent check.
 
