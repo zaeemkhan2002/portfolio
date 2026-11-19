@@ -10,12 +10,118 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Sparkles,
 } from "lucide-react";
-import { CONTACT, DEGREE, FOCUS, PUBLICATIONS, ROLE } from "@/data/profile";
+import {
+  CONTACT,
+  DEGREE,
+  FOCUS,
+  PUBLICATIONS,
+  ROLE,
+  type Publication,
+} from "@/data/profile";
 import { featuredProjects } from "@/data/projects";
 import ProjectCard from "@/components/ProjectCard";
 import { fadeUp, inView, stagger, staggerSlow } from "@/lib/motion";
+
+function PubCard({ pub }: { pub: Publication }) {
+  return (
+      <motion.div
+        variants={fadeUp}
+        className="panel panel-hover ticks group relative p-6"
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="chip chip-violet font-mono text-[11px]">
+            {pub.venueShort}
+          </span>
+          <span className="chip text-[11px] text-ok">
+            {pub.status}
+          </span>
+          {pub.extension && (
+            <span className="chip chip-amber text-[11px]">
+              {pub.extension.venueShort} · {pub.extension.status}
+            </span>
+          )}
+        </div>
+
+        <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent-ink">
+          {pub.title}
+        </h3>
+
+        <p className="mt-3 text-xs leading-relaxed text-muted">
+          {pub.authors}
+        </p>
+
+        <p className="mt-3 text-sm text-muted">{pub.venue}</p>
+        {pub.note && <p className="mt-1 text-xs text-faint">{pub.note}</p>}
+
+        <div className="mt-4 flex flex-wrap items-center gap-4">
+          {pub.slug && (
+            <Link
+              href={`/projects/${pub.slug}`}
+              className="inline-flex items-center gap-1 text-sm font-medium text-accent-ink before:absolute before:inset-0 before:content-['']"
+            >
+              Details
+              <ArrowUpRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </Link>
+          )}
+          {pub.url && (
+            <a
+              href={pub.url}
+              target="_blank"
+              rel="noreferrer"
+              className="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-accent-ink"
+            >
+              <FileText size={15} />
+              {pub.urlLabel ?? "Paper"}
+            </a>
+          )}
+        </div>
+      </motion.div>
+  );
+}
+
+function PubGroup({
+  items,
+  label,
+  aside,
+}: {
+  items: Publication[];
+  label: string;
+  aside?: React.ReactNode;
+}) {
+  return (
+    <>
+      <motion.div
+        className="flex items-center gap-4"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inView}
+      >
+        <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-body">
+          {label}
+        </h2>
+        <span className="rule" />
+        {aside}
+      </motion.div>
+
+      <motion.div
+        className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+        variants={stagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={inView}
+      >
+        {items.map((pub) => (
+          <PubCard key={pub.title} pub={pub} />
+        ))}
+      </motion.div>
+    </>
+  );
+}
 
 export default function Home() {
   const published = PUBLICATIONS.filter((p) => p.stage === "published");
@@ -134,110 +240,23 @@ export default function Home() {
 
       {/* ========================= PUBLICATIONS ========================= */}
       <section className="shell mt-24">
-        <motion.div
-          className="flex items-center gap-4"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inView}
-        >
-          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-body">
-            <Sparkles size={15} className="text-accent" />
-            Publications
-          </h2>
-          <span className="rule" />
-          <Link
-            href="/projects"
-            className="shrink-0 text-sm text-muted transition-colors hover:text-accent-ink"
-          >
-            All work →
-          </Link>
-        </motion.div>
-
-        <motion.div
-          className="mt-6 grid gap-4 md:grid-cols-2"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={inView}
-        >
-          {published.map((pub) => (
-            <motion.div
-              key={pub.venueShort}
-              variants={fadeUp}
-              className="panel panel-hover ticks group relative p-6"
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="chip chip-violet font-mono text-[11px]">
-                  {pub.venueShort}
-                </span>
-                <span className="chip text-[11px] text-ok">
-                  {pub.status}
-                </span>
-                {pub.extension && (
-                  <span className="chip chip-amber text-[11px]">
-                    {pub.extension.venueShort} · {pub.extension.status}
-                  </span>
-                )}
-              </div>
-
-              <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent-ink">
-                {pub.title}
-              </h3>
-
-              <p className="mt-3 text-xs leading-relaxed text-muted">
-                {pub.authors}
-              </p>
-
-              <p className="mt-3 text-sm text-muted">{pub.venue}</p>
-              {pub.note && <p className="mt-1 text-xs text-faint">{pub.note}</p>}
-
-              <div className="mt-4 flex flex-wrap items-center gap-4">
-                {pub.slug && (
-                  <Link
-                    href={`/projects/${pub.slug}`}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-accent-ink before:absolute before:inset-0 before:content-['']"
-                  >
-                    Details
-                    <ArrowUpRight
-                      size={15}
-                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </Link>
-                )}
-                {pub.url && (
-                  <a
-                    href={pub.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-accent-ink"
-                  >
-                    <FileText size={15} />
-                    {pub.urlLabel ?? "Paper"}
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {underReview.length > 0 && (
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={inView}
-            className="mt-5 text-sm text-muted"
-          >
-            {underReview.length} more under review at{" "}
-            {[...new Set(underReview.map((p) => p.venueShort))].join(" and ")} —{" "}
+        <PubGroup
+          items={published}
+          label="Publications"
+          aside={
             <Link
               href="/projects"
-              className="font-medium text-accent-ink transition-colors hover:text-accent"
+              className="shrink-0 text-sm text-muted transition-colors hover:text-accent-ink"
             >
-              see all work
+              All work →
             </Link>
-          </motion.p>
+          }
+        />
+
+        {underReview.length > 0 && (
+          <div className="mt-12">
+            <PubGroup items={underReview} label="Under review" />
+          </div>
         )}
       </section>
 
