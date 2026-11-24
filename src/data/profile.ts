@@ -305,7 +305,7 @@ export const EXPERIENCE = [
     org: "LUMS — Network Centric Computing, Introduction to Blockchain, Fundamentals of Computer Science",
     when: "Sep 2024 - May 2026",
     detail:
-      "Led and coordinated TA teams for classes of 200-300+ students, managing grading consistency, tutorial scheduling, and office hour coverage. Co-designed assignments, lab modules, and course content with faculty, including redesigning curriculum components for Fundamentals of CS to strengthen OOP instruction. Ran weekly tutorials on distributed/web programming, blockchain consensus algorithms, and smart contracts, and reviewed student code for efficiency and secure transaction design.",
+      "Led and coordinated TA teams for classes of 200-300+ students, managing grading consistency, tutorial scheduling, and office hour coverage. Co-designed assignments, lab modules, and course content with faculty, including redesigning curriculum components for Fundamentals of CS to strengthen OOP instruction. Ran weekly tutorials on distributed/web programming, blockchain consensus algorithms, and smart contracts, reviewed student code for efficiency and secure transaction design, and ran plagiarism checks with tools like JPlag.",
     tags: ["Teaching", "Curriculum Design", "Blockchain"],
   },
   {
@@ -313,7 +313,7 @@ export const EXPERIENCE = [
     org: "Systems Limited",
     when: "Jun 2025 - Jul 2025",
     detail:
-      "Developed and automated ETL workflows using SSIS, improving data integration efficiency and pipeline reliability. Analyzed large datasets to identify performance bottlenecks and implemented data validation processes, gaining foundational experience in data management frameworks applicable to large-scale robotics data pipelines.",
+      "Developed and automated ETL workflows using SSIS, improving data integration efficiency and pipeline reliability. Analyzed large datasets to identify performance bottlenecks and implemented data validation processes.",
     tags: ["SSIS", "ETL", "SQL"],
   },
   {
